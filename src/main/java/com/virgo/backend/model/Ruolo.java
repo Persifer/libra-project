@@ -18,7 +18,7 @@ public class Ruolo {
 
     @OneToMany(mappedBy = "ruolo")
     private List<Utente> utentiConRuolo = null;
-    
+
     public Ruolo() {
         super();
     }
