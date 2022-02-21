@@ -22,6 +22,10 @@ public class Utente {
     @OneToMany(mappedBy = "idProprietario")
     private List<Post> postList;
 
+    @ManyToOne
+    @JoinColumn(name = "ruoloUtente")
+    private Ruolo ruolo = null;
+
     @ManyToMany
     @JoinTable(name = "Like_Utente",joinColumns =
     @JoinColumn(name="idUtente"),inverseJoinColumns =
@@ -34,32 +38,27 @@ public class Utente {
     @JoinColumn(name="idLike"))
     private List<Unlike> unlikeRilasciati = null;
 
+
     public Utente(){
         super();
     }
 
-    public Utente(String username, String nome, String cognome, String email, String password) {
-        this.idUtente = null;
+    public Utente(String username, String nome, String cognome, String email, String password,
+                  Boolean isAttivo, List<Post> postList, Ruolo ruolo, List<Like> likeRilasciati, List<Unlike> unlikeRilasciati) {
         this.username = username;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.password = password;
-        this.isAttivo = true;
-    }
-
-    public Utente(Integer idUtente, String username, String nome, String cognome, String email, String password) {
-        this.idUtente = idUtente;
-        this.username = username;
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
-        this.password = password;
-        this.isAttivo = true;
+        this.isAttivo = isAttivo;
+        this.postList = postList;
+        this.ruolo = ruolo;
+        this.likeRilasciati = likeRilasciati;
+        this.unlikeRilasciati = unlikeRilasciati;
     }
 
     public Utente(Integer idUtente, String username, String nome, String cognome, String email, String password,
-                  Boolean isAttivo, List<Post> postList, List<Like> likeRilasciati, List<Unlike> unlikeRilasciati) {
+                  Boolean isAttivo, List<Post> postList, Ruolo ruolo, List<Like> likeRilasciati, List<Unlike> unlikeRilasciati) {
         this.idUtente = idUtente;
         this.username = username;
         this.nome = nome;
@@ -68,9 +67,11 @@ public class Utente {
         this.password = password;
         this.isAttivo = isAttivo;
         this.postList = postList;
+        this.ruolo = ruolo;
         this.likeRilasciati = likeRilasciati;
         this.unlikeRilasciati = unlikeRilasciati;
     }
+
 
     @Override
     public String toString() {

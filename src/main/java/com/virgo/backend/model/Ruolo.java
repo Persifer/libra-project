@@ -1,12 +1,26 @@
 package com.virgo.backend.model;
 
+import org.springframework.data.annotation.Id;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.OneToMany;
+import java.util.List;
 import java.util.UUID;
 
+@Entity
 public class Ruolo {
-    private UUID idRuolo;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idRuolo;
+
     private String nome;
     private String descrizione;
     private Boolean isAttivo;
+
+    @OneToMany(mappedBy = "ruolo")
+    private List<Utente> utentiConRuolo = null;
 
     public Ruolo() {
         super();
@@ -19,7 +33,7 @@ public class Ruolo {
         this.isAttivo = true;
     }
 
-    public Ruolo(UUID idRuolo, String nome, String descrizione) {
+    public Ruolo(Integer idRuolo, String nome, String descrizione) {
         this.idRuolo = idRuolo;
         this.nome = nome;
         this.descrizione = descrizione;
@@ -35,11 +49,11 @@ public class Ruolo {
                 '}';
     }
 
-    public UUID getIdRuolo() {
+    public Integer getIdRuolo() {
         return idRuolo;
     }
 
-    public void setIdRuolo(UUID idRuolo) {
+    public void setIdRuolo(Integer idRuolo) {
         this.idRuolo = idRuolo;
     }
 
