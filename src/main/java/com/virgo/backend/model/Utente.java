@@ -22,6 +22,18 @@ public class Utente {
     @OneToMany(mappedBy = "idProprietario")
     private List<Post> postList;
 
+    @ManyToMany
+    @JoinTable(name = "Like_Utente",joinColumns =
+    @JoinColumn(name="idUtente"),inverseJoinColumns =
+    @JoinColumn(name="idLike"))
+    private List<Like> likeRilasciati = null;
+
+    @ManyToMany
+    @JoinTable(name = "Unlike_Utente",joinColumns =
+    @JoinColumn(name="idUtente"),inverseJoinColumns =
+    @JoinColumn(name="idLike"))
+    private List<Unlike> unlikeRilasciati = null;
+
     public Utente(){
         super();
     }
@@ -46,6 +58,20 @@ public class Utente {
         this.isAttivo = true;
     }
 
+    public Utente(Integer idUtente, String username, String nome, String cognome, String email, String password,
+                  Boolean isAttivo, List<Post> postList, List<Like> likeRilasciati, List<Unlike> unlikeRilasciati) {
+        this.idUtente = idUtente;
+        this.username = username;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+        this.password = password;
+        this.isAttivo = isAttivo;
+        this.postList = postList;
+        this.likeRilasciati = likeRilasciati;
+        this.unlikeRilasciati = unlikeRilasciati;
+    }
+
     @Override
     public String toString() {
         return "Utente{" +
@@ -56,9 +82,11 @@ public class Utente {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", isAttivo=" + isAttivo +
+                ", postList=" + postList +
+                ", likeRilasciati=" + likeRilasciati +
+                ", unlikeRilasciati=" + unlikeRilasciati +
                 '}';
     }
-
 
     public Integer getIdUtente() {
         return idUtente;
@@ -114,5 +142,29 @@ public class Utente {
 
     public void setAttivo(Boolean attivo) {
         isAttivo = attivo;
+    }
+
+    public List<Post> getPostList() {
+        return postList;
+    }
+
+    public void setPostList(List<Post> postList) {
+        this.postList = postList;
+    }
+
+    public List<Like> getLikeRilasciati() {
+        return likeRilasciati;
+    }
+
+    public void setLikeRilasciati(List<Like> likeRilasciati) {
+        this.likeRilasciati = likeRilasciati;
+    }
+
+    public List<Unlike> getUnlikeRilasciati() {
+        return unlikeRilasciati;
+    }
+
+    public void setUnlikeRilasciati(List<Unlike> unlikeRilasciati) {
+        this.unlikeRilasciati = unlikeRilasciati;
     }
 }

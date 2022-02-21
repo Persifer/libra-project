@@ -2,6 +2,7 @@ package com.virgo.backend.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -15,12 +16,23 @@ public class Post {
     private String descrizione;
     private Date dataPublicazione;
     private Date dataAggiornamento;
+    private Boolean isAttivo;
 
     @ManyToOne
     @JoinColumn(name="idUtente")
     private Utente idProprietario;
 
-    private Boolean isAttivo;
+    @ManyToMany
+    @JoinTable(name = "post_like",joinColumns =
+    @JoinColumn(name="idPost"),inverseJoinColumns =
+    @JoinColumn(name="idLike"))
+    private List<Like> like = null;
+
+    @ManyToMany
+    @JoinTable(name = "post_unlike",joinColumns =
+    @JoinColumn(name="idPost"),inverseJoinColumns =
+    @JoinColumn(name="idLike"))
+    private List<Unlike> unlike = null;
 
     public Post(){
         super();
@@ -48,6 +60,19 @@ public class Post {
         this.isAttivo = true;
     }
 
+    public Post(Integer idPost, String titolo, String descrizione, Date dataPublicazione, Date dataAggiornamento,
+                Boolean isAttivo, Utente idProprietario, List<Like> like, List<Unlike> unlike) {
+        this.idPost = idPost;
+        this.titolo = titolo;
+        this.descrizione = descrizione;
+        this.dataPublicazione = dataPublicazione;
+        this.dataAggiornamento = dataAggiornamento;
+        this.isAttivo = isAttivo;
+        this.idProprietario = idProprietario;
+        this.like = like;
+        this.unlike = unlike;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -56,8 +81,10 @@ public class Post {
                 ", descrizione='" + descrizione + '\'' +
                 ", dataPublicazione=" + dataPublicazione +
                 ", dataAggiornamento=" + dataAggiornamento +
-                ", idUtente=" + idProprietario +
                 ", isAttivo=" + isAttivo +
+                ", idProprietario=" + idProprietario +
+                ", like=" + like +
+                ", unlike=" + unlike +
                 '}';
     }
 
@@ -115,5 +142,29 @@ public class Post {
 
     public void setAttivo(Boolean attivo) {
         isAttivo = attivo;
+    }
+
+    public Utente getIdProprietario() {
+        return idProprietario;
+    }
+
+    public void setIdProprietario(Utente idProprietario) {
+        this.idProprietario = idProprietario;
+    }
+
+    public List<Like> getLike() {
+        return like;
+    }
+
+    public void setLike(List<Like> like) {
+        this.like = like;
+    }
+
+    public List<Unlike> getUnlike() {
+        return unlike;
+    }
+
+    public void setUnlike(List<Unlike> unlike) {
+        this.unlike = unlike;
     }
 }
