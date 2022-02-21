@@ -18,15 +18,7 @@ public class Ruolo {
 
     @OneToMany(mappedBy = "ruolo")
     private List<Utente> utentiConRuolo = null;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    
     public Ruolo() {
         super();
     }
