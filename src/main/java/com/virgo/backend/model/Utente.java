@@ -1,16 +1,26 @@
 package com.virgo.backend.model;
 
+import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name="Utente")
 public class Utente {
 
-    private UUID idUtente;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idUtente;
+
     private String username;
     private String nome;
     private String cognome;
     private String email;
     private String password;
     private Boolean isAttivo;
+
+    @OneToMany(mappedBy = "idProprietario")
+    private List<Post> postList;
 
     public Utente(){
         super();
@@ -26,7 +36,7 @@ public class Utente {
         this.isAttivo = true;
     }
 
-    public Utente(UUID idUtente, String username, String nome, String cognome, String email, String password) {
+    public Utente(Integer idUtente, String username, String nome, String cognome, String email, String password) {
         this.idUtente = idUtente;
         this.username = username;
         this.nome = nome;
@@ -50,11 +60,11 @@ public class Utente {
     }
 
 
-    public UUID getIdUtente() {
+    public Integer getIdUtente() {
         return idUtente;
     }
 
-    public void setIdUtente(UUID idUtente) {
+    public void setIdUtente(Integer idUtente) {
         this.idUtente = idUtente;
     }
 

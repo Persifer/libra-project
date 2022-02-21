@@ -1,17 +1,25 @@
 package com.virgo.backend.model;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
+@Entity
 public class Post {
 
-    private UUID idPost;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idPost;
+
     private String titolo;
     private String descrizione;
     private Date dataPublicazione;
     private Date dataAggiornamento;
 
-    private Utente idUtente;
+    @ManyToOne
+    @JoinColumn(name="idUtente")
+    private Utente idProprietario;
+
     private Boolean isAttivo;
 
     public Post(){
@@ -25,18 +33,18 @@ public class Post {
         this.descrizione = descrizione;
         this.dataPublicazione = dataPublicazione;
         this.dataAggiornamento = dataAggiornamento;
-        this.idUtente = idUtente;
+        this.idProprietario = idUtente;
         this.isAttivo = true;
     }
 
-    public Post(UUID idPost, String titolo, String descrizione, Date dataPublicazione,
+    public Post(Integer idPost, String titolo, String descrizione, Date dataPublicazione,
                 Date dataAggiornamento, Utente idUtente) {
         this.idPost = idPost;
         this.titolo = titolo;
         this.descrizione = descrizione;
         this.dataPublicazione = dataPublicazione;
         this.dataAggiornamento = dataAggiornamento;
-        this.idUtente = idUtente;
+        this.idProprietario = idUtente;
         this.isAttivo = true;
     }
 
@@ -48,16 +56,16 @@ public class Post {
                 ", descrizione='" + descrizione + '\'' +
                 ", dataPublicazione=" + dataPublicazione +
                 ", dataAggiornamento=" + dataAggiornamento +
-                ", idUtente=" + idUtente +
+                ", idUtente=" + idProprietario +
                 ", isAttivo=" + isAttivo +
                 '}';
     }
 
-    public UUID getIdPost() {
+    public Integer getIdPost() {
         return idPost;
     }
 
-    public void setIdPost(UUID idPost) {
+    public void setIdPost(Integer idPost) {
         this.idPost = idPost;
     }
 
@@ -93,12 +101,12 @@ public class Post {
         this.dataAggiornamento = dataAggiornamento;
     }
 
-    public Utente getIdUtente() {
-        return idUtente;
+    public Utente getIdProrietario() {
+        return idProprietario;
     }
 
-    public void setIdUtente(Utente idUtente) {
-        this.idUtente = idUtente;
+    public void setIdProrietario(Utente idUtente) {
+        this.idProprietario = idUtente;
     }
 
     public Boolean getAttivo() {
