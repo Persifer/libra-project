@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Service("postService")
 @Transactional
@@ -39,4 +40,14 @@ public class PostService {
     }
 
 
+    public List<Post> getProfilePost(String username, String password, Post post) throws UtenteException, Exception{
+        Utente user = utenteService.login(new Utente(username, password));
+        List<Post> profilePost = null;
+        if(user != null){
+            profilePost = postRepo.getPostByIdProprietario(user);
+            return profilePost;
+        }else{
+            throw new UtenteException("L'utente che sta provando a pubblicare il post non esiste");
+        }
+    }
 }

@@ -2,7 +2,6 @@ package com.virgo.backend.model;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name="Utente")
@@ -30,7 +29,7 @@ public class Utente {
     @JoinTable(name = "Like_Utente",joinColumns =
     @JoinColumn(name="idUtente"),inverseJoinColumns =
     @JoinColumn(name="idLike"))
-    private List<Like> likeRilasciati = null;
+    private List<Liker> likeRilasciati = null;
 
     @ManyToMany
     @JoinTable(name = "Unlike_Utente",joinColumns =
@@ -44,7 +43,7 @@ public class Utente {
     }
 
     public Utente(String username, String nome, String cognome, String email, String password,
-                  List<Post> postList, Ruolo ruolo, List<Like> likeRilasciati, List<Unlike> unlikeRilasciati) {
+                  List<Post> postList, Ruolo ruolo, List<Liker> likeRilasciati, List<Unlike> unlikeRilasciati) {
         this.username = username;
         this.nome = nome;
         this.cognome = cognome;
@@ -57,7 +56,7 @@ public class Utente {
     }
 
     public Utente(Integer idUtente, String username, String nome, String cognome, String email, String password,
-                  List<Post> postList, Ruolo ruolo, List<Like> likeRilasciati, List<Unlike> unlikeRilasciati) {
+                  List<Post> postList, Ruolo ruolo, List<Liker> likeRilasciati, List<Unlike> unlikeRilasciati) {
         this.idUtente = idUtente;
         this.username = username;
         this.nome = nome;
@@ -170,11 +169,11 @@ public class Utente {
         this.postList = postList;
     }
 
-    public List<Like> getLikeRilasciati() {
+    public List<Liker> getLikeRilasciati() {
         return likeRilasciati;
     }
 
-    public void setLikeRilasciati(List<Like> likeRilasciati) {
+    public void setLikeRilasciati(List<Liker> likeRilasciati) {
         this.likeRilasciati = likeRilasciati;
     }
 
