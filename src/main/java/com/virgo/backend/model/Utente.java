@@ -17,7 +17,7 @@ public class Utente {
     private String cognome;
     private String email;
     private String password;
-    private Boolean isAttivo;
+    private Boolean isAttivo = true;
 
     @OneToMany(mappedBy = "idProprietario")
     private List<Post> postList;
@@ -44,13 +44,12 @@ public class Utente {
     }
 
     public Utente(String username, String nome, String cognome, String email, String password,
-                  Boolean isAttivo, List<Post> postList, Ruolo ruolo, List<Like> likeRilasciati, List<Unlike> unlikeRilasciati) {
+                  List<Post> postList, Ruolo ruolo, List<Like> likeRilasciati, List<Unlike> unlikeRilasciati) {
         this.username = username;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.password = password;
-        this.isAttivo = isAttivo;
         this.postList = postList;
         this.ruolo = ruolo;
         this.likeRilasciati = likeRilasciati;
@@ -58,19 +57,36 @@ public class Utente {
     }
 
     public Utente(Integer idUtente, String username, String nome, String cognome, String email, String password,
-                  Boolean isAttivo, List<Post> postList, Ruolo ruolo, List<Like> likeRilasciati, List<Unlike> unlikeRilasciati) {
+                  List<Post> postList, Ruolo ruolo, List<Like> likeRilasciati, List<Unlike> unlikeRilasciati) {
         this.idUtente = idUtente;
         this.username = username;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.password = password;
-        this.isAttivo = isAttivo;
         this.postList = postList;
         this.ruolo = ruolo;
         this.likeRilasciati = likeRilasciati;
         this.unlikeRilasciati = unlikeRilasciati;
     }
+
+    public Utente(String username, String nome, String cognome, String email, String password) {
+
+        this.username = username;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+        this.password = password;
+    }
+    public Utente( String username, String password) {
+
+        this.username = username;
+        this.nome = null;
+        this.cognome = null;
+        this.email = null;
+        this.password = password;
+    }
+
 
 
     @Override
@@ -167,5 +183,13 @@ public class Utente {
 
     public void setUnlikeRilasciati(List<Unlike> unlikeRilasciati) {
         this.unlikeRilasciati = unlikeRilasciati;
+    }
+
+    public Ruolo getRuolo() {
+        return ruolo;
+    }
+
+    public void setRuolo(Ruolo ruolo) {
+        this.ruolo = ruolo;
     }
 }

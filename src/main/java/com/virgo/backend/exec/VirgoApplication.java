@@ -5,8 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication(scanBasePackages = {"com.virgo.backend.service"})
-//(scanBasePackages = {"com.virgo.backend.service","com.virgo.backend.controller"})
+@SpringBootApplication(scanBasePackages = {"com.virgo.backend.service","com.virgo.backend.controller",
+		"com.virgo.backend.configuration"})
 @EnableJpaRepositories(basePackages = {"com.virgo.backend.repository"} )
 @EntityScan( basePackages = {"com.virgo.backend.model"} )
 public class VirgoApplication {
