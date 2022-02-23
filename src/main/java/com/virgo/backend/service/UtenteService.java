@@ -50,7 +50,22 @@ public class UtenteService {
     }
 
     public HttpStatus login(Utente user){
-        return null;
+        Utente loggedUser;
+        try{
+            // TODO -> Se implementata la cifratura della password, cifra la password e la controlla con quella nel db
+            loggedUser = repoUtente.findByUsernameAndPassword(user.getUsername(), user.getPassword());
+            if(loggedUser != null){
+                return HttpStatus.OK;
+            }else{
+                return HttpStatus.BAD_REQUEST;
+            }
+        }catch (Exception error){
+            error.printStackTrace();
+            return HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+
+
     }
 
     public Utente login(String username, String passw) {

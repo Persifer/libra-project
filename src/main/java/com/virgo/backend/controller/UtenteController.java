@@ -24,14 +24,11 @@ public class UtenteController {
 
     @PostMapping("/insert")
     public HttpStatus registration(@RequestBody Utente newUtente){
-
         return utenteService.registration(newUtente);
-
     }
 
     @GetMapping("/login")
     public HttpStatus loginHandler(@RequestBody Utente user){
-
         return utenteService.login(user);
 
     }
