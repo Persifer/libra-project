@@ -23,8 +23,6 @@ public class UtenteService {
 
     public Utente registration(Utente newUtente) throws UtenteException {
 
-
-
         if(repoUtente.findByEmail(newUtente.getEmail()).isEmpty()){
             // Controllo che due utenti non abbiano lo stesso username
             if(repoUtente.findByUsername(newUtente.getUsername()).isEmpty()){
@@ -43,7 +41,6 @@ public class UtenteService {
             throw new IllegalStateException("[!] L'utente che si sta provano ad inserire esiste già [!]");
         }
 
-
     }
 
     public Utente login(Utente user) throws UtenteException {
@@ -57,11 +54,6 @@ public class UtenteService {
                 throw new UtenteException("[!] L'utente inserito non esiste [!]");
             }
 
-    }
-
-    public Utente login(String username, String passw) {
-        System.out.println("Ciao");
-        return null;
     }
 
     public List<Utente> getAllUsers(){
