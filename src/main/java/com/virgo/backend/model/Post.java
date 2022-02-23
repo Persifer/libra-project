@@ -1,9 +1,9 @@
 package com.virgo.backend.model;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 public class Post {
@@ -14,9 +14,13 @@ public class Post {
 
     private String titolo;
     private String descrizione;
-    private Date dataPublicazione;
-    private Date dataAggiornamento;
-    private Boolean isAttivo;
+    private String photoPath;
+    @Column(nullable = false)
+    private OffsetDateTime dataPublicazione;
+    @Column(nullable = false)
+    private OffsetDateTime dataAggiornamento;
+
+    private Boolean isAttivo = true;
 
     @ManyToOne
     @JoinColumn(name="idUtente")
@@ -38,33 +42,44 @@ public class Post {
         super();
     }
 
-    public Post( String titolo, String descrizione, Date dataPublicazione,
-                Date dataAggiornamento, Utente idUtente) {
-        this.idPost = null;
+    // Costruttore con solo dati e photoPath di default
+    public Post(String titolo, String descrizione,OffsetDateTime dataPublicazione, OffsetDateTime dataAggiornamento) {
         this.titolo = titolo;
         this.descrizione = descrizione;
+        this.photoPath = "D:\\locazione_a_caso\\foto.jpg";
         this.dataPublicazione = dataPublicazione;
         this.dataAggiornamento = dataAggiornamento;
-        this.idProprietario = idUtente;
-        this.isAttivo = true;
     }
 
-    public Post(Integer idPost, String titolo, String descrizione, Date dataPublicazione,
-                Date dataAggiornamento, Utente idUtente) {
+    // Costruttore con solo i dati del post
+    public Post(String titolo, String descrizione, String photoPath, OffsetDateTime dataPublicazione,
+                OffsetDateTime dataAggiornamento) {
+        this.titolo = titolo;
+        this.descrizione = descrizione;
+        this.photoPath = photoPath;
+        this.dataPublicazione = dataPublicazione;
+        this.dataAggiornamento = dataAggiornamento;
+    }
+
+    //Post con tutto tranne id, like e unlike
+    public Post(String titolo, String descrizione, String photoPath, OffsetDateTime dataPublicazione,
+                OffsetDateTime dataAggiornamento, Utente idProprietario) {
+        this.titolo = titolo;
+        this.descrizione = descrizione;
+        this.photoPath = photoPath;
+        this.dataPublicazione = dataPublicazione;
+        this.dataAggiornamento = dataAggiornamento;
+        this.idProprietario = idProprietario;
+    }
+
+    // Costruttore con tutti i parametri
+    public Post(Integer idPost, String titolo, String descrizione, String photoPath, OffsetDateTime dataPublicazione,
+                OffsetDateTime dataAggiornamento, Boolean isAttivo, Utente idProprietario,
+                List<Like> like, List<Unlike> unlike) {
         this.idPost = idPost;
         this.titolo = titolo;
         this.descrizione = descrizione;
-        this.dataPublicazione = dataPublicazione;
-        this.dataAggiornamento = dataAggiornamento;
-        this.idProprietario = idUtente;
-        this.isAttivo = true;
-    }
-
-    public Post(Integer idPost, String titolo, String descrizione, Date dataPublicazione, Date dataAggiornamento,
-                Boolean isAttivo, Utente idProprietario, List<Like> like, List<Unlike> unlike) {
-        this.idPost = idPost;
-        this.titolo = titolo;
-        this.descrizione = descrizione;
+        this.photoPath = photoPath;
         this.dataPublicazione = dataPublicazione;
         this.dataAggiornamento = dataAggiornamento;
         this.isAttivo = isAttivo;
@@ -79,6 +94,7 @@ public class Post {
                 "idPost=" + idPost +
                 ", titolo='" + titolo + '\'' +
                 ", descrizione='" + descrizione + '\'' +
+                ", photoPath='" + photoPath + '\'' +
                 ", dataPublicazione=" + dataPublicazione +
                 ", dataAggiornamento=" + dataAggiornamento +
                 ", isAttivo=" + isAttivo +
@@ -86,6 +102,14 @@ public class Post {
                 ", like=" + like +
                 ", unlike=" + unlike +
                 '}';
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
 
     public Integer getIdPost() {
@@ -112,19 +136,19 @@ public class Post {
         this.descrizione = descrizione;
     }
 
-    public Date getDataPublicazione() {
+    public OffsetDateTime getDataPublicazione() {
         return dataPublicazione;
     }
 
-    public void setDataPublicazione(Date dataPublicazione) {
+    public void setDataPublicazione(OffsetDateTime dataPublicazione) {
         this.dataPublicazione = dataPublicazione;
     }
 
-    public Date getDataAggiornamento() {
+    public OffsetDateTime getDataAggiornamento() {
         return dataAggiornamento;
     }
 
-    public void setDataAggiornamento(Date dataAggiornamento) {
+    public void setDataAggiornamento(OffsetDateTime dataAggiornamento) {
         this.dataAggiornamento = dataAggiornamento;
     }
 

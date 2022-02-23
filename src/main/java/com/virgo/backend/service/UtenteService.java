@@ -58,5 +58,4 @@ public class UtenteService {
         return (List<Utente>) repoUtente.findAll();
     }
 
-
 }

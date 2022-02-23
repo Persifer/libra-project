@@ -78,6 +78,7 @@ public class Utente {
         this.email = email;
         this.password = password;
     }
+
     public Utente( String username, String password) {
 
         this.username = username;
