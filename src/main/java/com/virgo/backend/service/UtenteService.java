@@ -1,5 +1,6 @@
 package com.virgo.backend.service;
 
+import com.virgo.backend.exception.UtenteException;
 import com.virgo.backend.model.Utente;
 import com.virgo.backend.repository.UtenteCrudRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,51 +21,41 @@ public class UtenteService {
     @Autowired
     private RuoloService ruoloService;
 
-    public HttpStatus registration(Utente newUtente){
+    public Utente registration(Utente newUtente) throws UtenteException {
 
-        try{
 
-            if(repoUtente.findByEmail(newUtente.getEmail()).isEmpty()){
-                if(repoUtente.findByUsername(newUtente.getUsername()).isEmpty()){
-                    //TODO -> IMPLEMENTA UN METODO DI HASHING DELLA PASSWORD
 
-                    newUtente.setRuolo(ruoloService.getUserRole());
+        if(repoUtente.findByEmail(newUtente.getEmail()).isEmpty()){
+            // Controllo che due utenti non abbiano lo stesso username
+            if(repoUtente.findByUsername(newUtente.getUsername()).isEmpty()){
+                //TODO -> IMPLEMENTA UN METODO DI HASHING DELLA PASSWORD
 
-                    repoUtente.save(newUtente);
-                    return HttpStatus.CREATED;
-                }else{
-                   return HttpStatus.BAD_REQUEST;
-                }
+                newUtente.setRuolo(ruoloService.getUserRole());
 
+                return repoUtente.save(newUtente);
             }else{
-                throw new IllegalStateException("[!] L'utente che si sta provano ad inserire esiste già [!]");
+                // todo eccezione custom
+
+                throw new UtenteException("[!] L'username inserito esiste già [!]");
             }
-        }catch (Exception error){
-            error.printStackTrace();
-            return HttpStatus.BAD_REQUEST;
+
+        }else{
+            throw new IllegalStateException("[!] L'utente che si sta provano ad inserire esiste già [!]");
         }
-
-
 
 
     }
 
-    public HttpStatus login(Utente user){
+    public Utente login(Utente user) throws UtenteException {
         Utente loggedUser;
-        try{
             // TODO -> Se implementata la cifratura della password, cifra la password e la controlla con quella nel db
             loggedUser = repoUtente.findByUsernameAndPassword(user.getUsername(), user.getPassword());
+
             if(loggedUser != null){
-                return HttpStatus.OK;
+                return loggedUser;
             }else{
-                return HttpStatus.BAD_REQUEST;
+                throw new UtenteException("[!] L'utente inserito non esiste [!]");
             }
-        }catch (Exception error){
-            error.printStackTrace();
-            return HttpStatus.INTERNAL_SERVER_ERROR;
-        }
-
-
 
     }
 
