@@ -1,6 +1,5 @@
 package com.virgo.backend.service;
 
-import com.virgo.backend.exception.PostException;
 import com.virgo.backend.exception.UtenteException;
 import com.virgo.backend.model.Post;
 import com.virgo.backend.model.Utente;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -57,7 +55,7 @@ public class PostService {
         List<Post> postBetween = null;
 
         if(user != null){
-            postBetween = postRepo.getPostBetweeen(user.getIdUtente(),start, end);
+            postBetween = postRepo.getAllPostBetweeen(user.getIdUtente(),start, end);
             return postBetween;
         }else{
             throw new UtenteException("L'utente che sta provando a pubblicare il post non esiste");
@@ -69,7 +67,7 @@ public class PostService {
         List<Post> postBetween = null;
 
         if(user != null){
-            postBetween = postRepo.getLastUpdateBetween(user.getIdUtente(),start, end);
+            postBetween = postRepo.getAllLastUpdateBetweenByUser(user.getIdUtente(),start, end);
             return postBetween;
         }else{
             throw new UtenteException("L'utente che sta provando a pubblicare il post non esiste");
