@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -46,6 +47,18 @@ public class PostService {
         if(user != null){
             profilePost = postRepo.getPostByIdProprietario(user);
             return profilePost;
+        }else{
+            throw new UtenteException("L'utente che sta provando a pubblicare il post non esiste");
+        }
+    }
+
+    public List<Post> getPostBetween(String username, String password, String start, String end) throws UtenteException{
+        Utente user = utenteService.login(new Utente(username, password));
+        List<Post> postBetween = null;
+
+        if(user != null){
+            postBetween = postRepo.getPostBetweeen(user.getIdUtente(),start, end);
+            return postBetween;
         }else{
             throw new UtenteException("L'utente che sta provando a pubblicare il post non esiste");
         }

@@ -6,12 +6,14 @@ public class PostDto {
 
     private String titolo;
     private String descrizione;
+    private String photoPath;
     private OffsetDateTime dataPublicazione;
 
     private String usernameProprietario;
 
-    public PostDto(String titolo, String descrizione, OffsetDateTime dataPublicazione, String usernameProprietario) {
+    public PostDto(String titolo, String descrizione, String photoPath, OffsetDateTime dataPublicazione, String usernameProprietario) {
         this.titolo = titolo;
+        this.photoPath = photoPath;
         this.descrizione = descrizione;
         this.dataPublicazione = dataPublicazione;
         this.usernameProprietario = usernameProprietario;
@@ -57,5 +59,13 @@ public class PostDto {
 
     public void setUsernameProprietario(String usernameProprietario) {
         this.usernameProprietario = usernameProprietario;
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
 }
