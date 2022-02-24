@@ -63,4 +63,16 @@ public class PostService {
             throw new UtenteException("L'utente che sta provando a pubblicare il post non esiste");
         }
     }
+
+    public List<Post> getLastUpdateBetween(String username, String password, String start, String end) throws UtenteException{
+        Utente user = utenteService.login(new Utente(username, password));
+        List<Post> postBetween = null;
+
+        if(user != null){
+            postBetween = postRepo.getLastUpdateBetween(user.getIdUtente(),start, end);
+            return postBetween;
+        }else{
+            throw new UtenteException("L'utente che sta provando a pubblicare il post non esiste");
+        }
+    }
 }

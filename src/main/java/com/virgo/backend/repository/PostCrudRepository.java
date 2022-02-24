@@ -19,4 +19,10 @@ public interface PostCrudRepository extends CrudRepository<Post, Integer> {
                     "WHERE u.id_utente = :id AND p.data_publicazione BETWEEN :start AND :end",
             nativeQuery = true)
     public List<Post> getPostBetweeen(@Param("id") Integer idUtente, @Param("start")String start, @Param("end") String end);
+
+    @Query(
+            value= "SELECT  * FROM Post p JOIN Utente u ON (u.id_utente = p.id_utente)" +
+                    "WHERE u.id_utente = :id AND p.data_aggiornamento BETWEEN :start AND :end",
+            nativeQuery = true)
+    public List<Post> getLastUpdateBetween(@Param("id") Integer idUtente, @Param("start")String start, @Param("end") String end);
 }

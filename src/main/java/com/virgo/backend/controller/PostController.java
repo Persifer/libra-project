@@ -104,6 +104,31 @@ public class PostController {
 
     }
 
-    
+    @GetMapping("/getLastUpdate/{start}/{end}")
+    public ResponseEntity<List<PostDto>> getLastUpdateBetween(@PathVariable("start") String startDate,
+                                                        @PathVariable("end") String endDate,
+                                                        @RequestHeader HttpHeaders header){
+        try{
+            String username = header.getFirst("username");
+            String password = header.getFirst("password");
+
+
+            List<Post> postList = postService.getLastUpdateBetween(username, password, startDate, endDate);
+
+            List<PostDto> finalList = createPostDto(postList);
+
+            if(finalList.isEmpty()){
+                return new ResponseEntity<List<PostDto>>(finalList, HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<List<PostDto>>(finalList, HttpStatus.OK);
+        }catch (UtenteException error){
+            return new ResponseEntity<List<PostDto>>((List<PostDto>) null, HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+
+
 
 }
