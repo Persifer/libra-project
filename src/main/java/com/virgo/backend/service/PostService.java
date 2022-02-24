@@ -1,5 +1,7 @@
 package com.virgo.backend.service;
 
+import com.virgo.backend.controller.dto.ModifyPostDto;
+import com.virgo.backend.exception.PostException;
 import com.virgo.backend.exception.UtenteException;
 import com.virgo.backend.model.Post;
 import com.virgo.backend.model.Utente;
@@ -10,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service("postService")
 @Transactional
@@ -96,6 +100,37 @@ public class PostService {
             return postBetween;
         }else{
             throw new UtenteException("L'utente che sta provando a pubblicare il post non esiste");
+        }
+    }
+
+    public Post modifyPost(ModifyPostDto data) throws UtenteException, PostException, Exception {
+        Utente user = utenteService.login(new Utente(data.getUsername(), data.getPassword()));
+        if(user != null){
+
+            Post updatedPost = postRepo.getById(data.getIdPost());
+
+            if(updatedPost != null){
+                if(Objects.equals(user.getIdUtente(), updatedPost.getIdProprietario().getIdUtente())){
+
+                    if(!data.getDescrizione().equals("")){
+                        updatedPost.setDescrizione(data.getDescrizione());
+                    }
+
+                    if(!data.getTitolo().equals("")){
+                        updatedPost.setTitolo(data.getTitolo());
+                    }
+
+                    postRepo.save(updatedPost);
+
+                    return updatedPost;
+                }else{
+                    throw new UtenteException("L'utente inserito non è il proprietraio del post!");
+                }
+            }else{
+                throw new UtenteException("Il post selezionato non esiste!");
+            }
+        }else{
+            throw new UtenteException("L'utente inserito non esiste!");
         }
     }
 

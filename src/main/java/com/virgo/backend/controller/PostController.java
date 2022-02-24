@@ -1,5 +1,6 @@
 package com.virgo.backend.controller;
 
+import com.virgo.backend.controller.dto.ModifyPostDto;
 import com.virgo.backend.controller.dto.PostDto;
 import com.virgo.backend.exception.PostException;
 import com.virgo.backend.exception.UtenteException;
@@ -162,8 +163,6 @@ public class PostController {
             String username = header.getFirst("username");
             String password = header.getFirst("password");
 
-            System.out.println(word);
-
             List<Post> findedPost = postService.getPostWordForUser(username, password, word);
 
             List<PostDto> finalList = createPostDto(findedPost);
@@ -181,6 +180,26 @@ public class PostController {
         }
 
     }
+
+    @PutMapping(value = "/modify", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> modifyPost(@RequestBody ModifyPostDto data){
+        try{
+
+            System.out.println("Posted data\n"+
+                    "Titolo: "+data.getTitolo()+"\n Descrizione: "+data.getDescrizione());
+
+            Post post = postService.modifyPost(data);
+
+            return new ResponseEntity<String>( "Post pubblicato correttamente", HttpStatus.BAD_REQUEST);
+        }catch (UtenteException | PostException error){
+
+            return new ResponseEntity<String>(error.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception error){
+
+            return new ResponseEntity<String>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+     }
 
 
 
