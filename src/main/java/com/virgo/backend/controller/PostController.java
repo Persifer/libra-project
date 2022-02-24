@@ -128,7 +128,59 @@ public class PostController {
 
     }
 
+    @GetMapping("/getPostWord/{word}")
+    public ResponseEntity<List<PostDto>> getPostWithWord(@PathVariable("word") String word,
+                                                         @RequestHeader HttpHeaders header){
+        try {
+            String username = header.getFirst("username");
+            String password = header.getFirst("password");
 
+            System.out.println(word);
+
+            List<Post> findedPost = postService.getPostWord(username, password, word);
+
+            List<PostDto> finalList = createPostDto(findedPost);
+
+            if(finalList.isEmpty()){
+                return new ResponseEntity<List<PostDto>>(finalList, HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<List<PostDto>>(finalList, HttpStatus.OK);
+
+        }catch (UtenteException e) {
+            return new ResponseEntity<List<PostDto>>((List<PostDto>) null, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<List<PostDto>>((List<PostDto>) null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @GetMapping("/getPostWordForUser/{word}")
+    public ResponseEntity<List<PostDto>> getPostWithWordForUser(@PathVariable("word") String word,
+                                                         @RequestHeader HttpHeaders header){
+        try {
+            String username = header.getFirst("username");
+            String password = header.getFirst("password");
+
+            System.out.println(word);
+
+            List<Post> findedPost = postService.getPostWordForUser(username, password, word);
+
+            List<PostDto> finalList = createPostDto(findedPost);
+
+            if(finalList.isEmpty()){
+                return new ResponseEntity<List<PostDto>>(finalList, HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<List<PostDto>>(finalList, HttpStatus.OK);
+
+        }catch (UtenteException e) {
+            return new ResponseEntity<List<PostDto>>((List<PostDto>) null, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<List<PostDto>>((List<PostDto>) null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 
 
 

@@ -55,7 +55,7 @@ public class PostService {
         List<Post> postBetween = null;
 
         if(user != null){
-            postBetween = postRepo.getAllPostBetweeen(user.getIdUtente(),start, end);
+            postBetween = postRepo.getAllPostBetweeen(start, end);
             return postBetween;
         }else{
             throw new UtenteException("L'utente che sta provando a pubblicare il post non esiste");
@@ -73,4 +73,31 @@ public class PostService {
             throw new UtenteException("L'utente che sta provando a pubblicare il post non esiste");
         }
     }
+
+    public List<Post> getPostWord(String username, String password, String word) throws UtenteException{
+        Utente user = utenteService.login(new Utente(username, password));
+        List<Post> postBetween = null;
+
+        if(user != null){
+            postBetween = postRepo.getPostWithWords(word);
+            return postBetween;
+        }else{
+            throw new UtenteException("L'utente che sta provando a pubblicare il post non esiste");
+        }
+    }
+
+    public List<Post> getPostWordForUser(String username, String password, String word) throws UtenteException{
+        Utente user = utenteService.login(new Utente(username, password));
+        List<Post> postBetween = null;
+
+        if(user != null){
+            System.out.println("Utente: " + user.getUsername() + " Id: "+ user.getIdUtente());
+            postBetween = postRepo.getPostWithWordsForUser(user.getIdUtente(), word);
+            return postBetween;
+        }else{
+            throw new UtenteException("L'utente che sta provando a pubblicare il post non esiste");
+        }
+    }
+
+
 }

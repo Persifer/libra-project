@@ -16,7 +16,7 @@ public interface PostCrudRepository extends CrudRepository<Post, Integer> {
     @Query(
             value= "SELECT  * FROM Post p WHERE p.data_publicazione BETWEEN :start AND :end",
             nativeQuery = true)
-    public List<Post> getAllPostBetweeen(@Param("id") Integer idUtente, @Param("start")String start, @Param("end") String end);
+    public List<Post> getAllPostBetweeen(@Param("start")String start, @Param("end") String end);
 
 //    @Query(
 //            value= "SELECT  * FROM Post p JOIN Utente u ON (u.id_utente = p.id_utente)" +
@@ -31,16 +31,16 @@ public interface PostCrudRepository extends CrudRepository<Post, Integer> {
     public List<Post> getAllLastUpdateBetweenByUser(@Param("id") Integer idUtente, @Param("start")String start, @Param("end") String end);
 
     @Query(
-            value = "SELECT * FROM Post p WHERE p.descrizione LIKE '%?1%' OR p.titolo LIKE '%?1%' ",
+            value = "SELECT * FROM Post p WHERE p.descrizione LIKE %:word% OR p.titolo LIKE %:word% ",
             nativeQuery = true
     )
-    public List<Post> getPostWithWords(String parola);
+    public List<Post> getPostWithWords(@Param("word") String parola);
 
 
     @Query(
             value = "SELECT * FROM Post p JOIN Utente u ON (u.id_utente = p.id_utente)" +
-                    "WHERE u.id_utente = ?1 AND p.descrizione LIKE '%?2%' OR p.titolo LIKE '%?2%' ",
+                    "WHERE u.id_utente = :user_id AND (p.descrizione LIKE %:word% OR p.titolo LIKE %:word%)",
             nativeQuery = true
     )
-    public List<Post> getPostWithWordsForUser(Integer userId, String parola);
+    public List<Post> getPostWithWordsForUser(@Param("user_id") Integer userId, @Param("word") String parola);
 }
