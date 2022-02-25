@@ -107,22 +107,22 @@ public class PostService {
         Utente user = utenteService.login(new Utente(data.getUsername(), data.getPassword()));
         if(user != null){
 
-            Post updatedPost = postRepo.getById(data.getIdPost());
+            Optional<Post> updatedPost = postRepo.findById(data.getIdPost());
 
-            if(updatedPost != null){
-                if(Objects.equals(user.getIdUtente(), updatedPost.getIdProprietario().getIdUtente())){
+            if(updatedPost.isPresent()){
+                if(Objects.equals(user.getIdUtente(), updatedPost.get().getIdProprietario().getIdUtente())){
 
                     if(!data.getDescrizione().equals("")){
-                        updatedPost.setDescrizione(data.getDescrizione());
+                        updatedPost.get().setDescrizione(data.getDescrizione());
                     }
 
                     if(!data.getTitolo().equals("")){
-                        updatedPost.setTitolo(data.getTitolo());
+                        updatedPost.get().setTitolo(data.getTitolo());
                     }
 
-                    postRepo.save(updatedPost);
+                    postRepo.save(updatedPost.get());
 
-                    return updatedPost;
+                    return updatedPost.get();
                 }else{
                     throw new UtenteException("L'utente inserito non è il proprietraio del post!");
                 }
