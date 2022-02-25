@@ -1,8 +1,11 @@
 package com.virgo.backend.model;
 
+import com.virgo.backend.model.compoundkeys.PostLiker;
+
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Post {
@@ -24,11 +27,8 @@ public class Post {
     @JoinColumn(name="idUtente")
     private Utente idProprietario;
 
-    @ManyToMany
-    @JoinTable(name = "post_like",joinColumns =
-    @JoinColumn(name="idPost"),inverseJoinColumns =
-    @JoinColumn(name="idLike"))
-    private List<Liker> liker = null;
+    @OneToMany(mappedBy = "post")
+    private Set<PostLiker> numberOfLike = null;
 
     @ManyToMany
     @JoinTable(name = "post_unlike",joinColumns =
@@ -73,7 +73,7 @@ public class Post {
     // Costruttore con tutti i parametri
     public Post(Integer idPost, String titolo, String descrizione, String photoPath, OffsetDateTime dataPublicazione,
                 OffsetDateTime dataAggiornamento, Boolean isAttivo, Utente idProprietario,
-                List<Liker> liker, List<Unlike> unlike) {
+                Set<PostLiker> liker, List<Unlike> unlike) {
         this.idPost = idPost;
         this.titolo = titolo;
         this.descrizione = descrizione;
@@ -82,7 +82,7 @@ public class Post {
         this.dataAggiornamento = dataAggiornamento;
         this.isAttivo = isAttivo;
         this.idProprietario = idProprietario;
-        this.liker = liker;
+        this.numberOfLike = liker;
         this.unlike = unlike;
     }
 
@@ -97,7 +97,7 @@ public class Post {
                 ", dataAggiornamento=" + dataAggiornamento +
                 ", isAttivo=" + isAttivo +
                 ", idProprietario=" + idProprietario +
-                ", like=" + liker +
+                ", like=" + numberOfLike +
                 ", unlike=" + unlike +
                 '}';
     }
@@ -174,12 +174,12 @@ public class Post {
         this.idProprietario = idProprietario;
     }
 
-    public List<Liker> getLike() {
-        return liker;
+    public Set<PostLiker> getLike() {
+        return numberOfLike;
     }
 
-    public void setLike(List<Liker> liker) {
-        this.liker = liker;
+    public void setLike(Set<PostLiker> liker) {
+        this.numberOfLike = liker;
     }
 
     public List<Unlike> getUnlike() {

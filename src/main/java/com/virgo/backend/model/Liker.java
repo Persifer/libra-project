@@ -1,5 +1,7 @@
 package com.virgo.backend.model;
 
+import com.virgo.backend.model.compoundkeys.PostLiker;
+
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -17,8 +19,8 @@ public class Liker {
    @OneToMany(mappedBy = "liker")
     private Set<UserLiker> utente;
 
-    @ManyToMany(mappedBy = "liker")
-    private List<Post> post;
+    @OneToMany(mappedBy = "liker")
+    private Set<PostLiker> post;
 
     public Liker() {
         super();
@@ -28,13 +30,13 @@ public class Liker {
         this.dataPublicazione = dataPublicazione;
     }
 
-    public Liker(OffsetDateTime dataPublicazione, Set<UserLiker> utente, List<Post> post) {
+    public Liker(OffsetDateTime dataPublicazione, Set<UserLiker> utente, Set<PostLiker> post) {
         this.dataPublicazione = dataPublicazione;
         this.utente = utente;
         this.post = post;
     }
 
-    public Liker(Integer idLike, OffsetDateTime dataPublicazione, Set<UserLiker> utente, List<Post> post) {
+    public Liker(Integer idLike, OffsetDateTime dataPublicazione, Set<UserLiker> utente, Set<PostLiker> post) {
         this.idLike = idLike;
         this.dataPublicazione = dataPublicazione;
         this.utente = utente;
@@ -66,11 +68,11 @@ public class Liker {
         this.utente = utente;
     }
 
-    public List<Post> getPost() {
+    public Set<PostLiker> getPost() {
         return post;
     }
 
-    public void setPost(List<Post> post) {
+    public void setPost(Set<PostLiker> post) {
         this.post = post;
     }
 }
