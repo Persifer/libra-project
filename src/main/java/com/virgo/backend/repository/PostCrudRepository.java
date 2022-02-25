@@ -12,7 +12,7 @@ public interface PostCrudRepository extends CrudRepository<Post, Integer> {
 
     //@Query("SELECT p FROM Post p JOIN Utente u ON (u = p.idProprietario)" )
     public List<Post> getPostByIdProprietario(Utente user);
-    
+
     @Query(
             value= "SELECT  * FROM Post p WHERE p.data_publicazione BETWEEN :start AND :end",
             nativeQuery = true)
