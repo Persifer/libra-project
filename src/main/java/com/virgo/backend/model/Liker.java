@@ -1,6 +1,7 @@
 package com.virgo.backend.model;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -9,6 +10,9 @@ public class Liker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idLike;
+
+    @Column(nullable = false)
+    private OffsetDateTime dataPublicazione;
 
    @OneToMany(mappedBy = "liker")
     private Set<UserLiker> utente;
@@ -20,8 +24,19 @@ public class Liker {
         super();
     }
 
-    public Liker(Integer idLike, Set<UserLiker> utente, List<Post> post) {
+    public Liker(OffsetDateTime dataPublicazione) {
+        this.dataPublicazione = dataPublicazione;
+    }
+
+    public Liker(OffsetDateTime dataPublicazione, Set<UserLiker> utente, List<Post> post) {
+        this.dataPublicazione = dataPublicazione;
+        this.utente = utente;
+        this.post = post;
+    }
+
+    public Liker(Integer idLike, OffsetDateTime dataPublicazione, Set<UserLiker> utente, List<Post> post) {
         this.idLike = idLike;
+        this.dataPublicazione = dataPublicazione;
         this.utente = utente;
         this.post = post;
     }
