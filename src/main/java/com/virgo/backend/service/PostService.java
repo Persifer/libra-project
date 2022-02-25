@@ -134,5 +134,11 @@ public class PostService {
         }
     }
 
+    public Post getSinglePost(Integer idPost){
+
+        Optional<Post> wantedPost = postRepo.findById(idPost);
+        return wantedPost.orElse(null);
+
+    }
 
 }

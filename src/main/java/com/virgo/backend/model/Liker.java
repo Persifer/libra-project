@@ -2,6 +2,7 @@ package com.virgo.backend.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Liker {
@@ -9,8 +10,8 @@ public class Liker {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idLike;
 
-    @ManyToMany(mappedBy = "likeRilasciati")
-    private List<Utente> utente;
+   @OneToMany(mappedBy = "liker")
+    private Set<UserLiker> utente;
 
     @ManyToMany(mappedBy = "liker")
     private List<Post> post;
@@ -19,7 +20,7 @@ public class Liker {
         super();
     }
 
-    public Liker(Integer idLike, List<Utente> utente, List<Post> post) {
+    public Liker(Integer idLike, Set<UserLiker> utente, List<Post> post) {
         this.idLike = idLike;
         this.utente = utente;
         this.post = post;
@@ -42,11 +43,11 @@ public class Liker {
         this.idLike = idLike;
     }
 
-    public List<Utente> getUtente() {
+    public Set<UserLiker> getUtente() {
         return utente;
     }
 
-    public void setUtente(List<Utente> utente) {
+    public void setUtente(Set<UserLiker> utente) {
         this.utente = utente;
     }
 
