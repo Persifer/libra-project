@@ -1,6 +1,7 @@
 package com.virgo.backend.model;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -14,17 +15,29 @@ public class Unlike {
     @OneToMany(mappedBy = "unlike")
     private Set<UserUnliker> joinTable;
 
-    @ManyToMany(mappedBy = "unlike")
-    private List<Post> post;
+    @OneToMany(mappedBy = "unlike")
+    private Set<PostUnliker> joinColumn;
+
+    @Column(nullable = false)
+    private OffsetDateTime dataPublicazione;
+
+    private Boolean isAttivo = true;
 
     public Unlike(){
         super();
     }
 
-    public Unlike(Integer idUnlike, Set<UserUnliker> joinTable, List<Post> post) {
+    public Unlike(Integer idUnlike, Set<UserUnliker> joinTable, Set<PostUnliker> joinColumn, OffsetDateTime dataPublicazione) {
         this.idUnlike = idUnlike;
         this.joinTable = joinTable;
-        this.post = post;
+        this.joinColumn = joinColumn;
+        this.dataPublicazione = dataPublicazione;
+        this.isAttivo = true;
+    }
+
+    public Unlike(OffsetDateTime dataPublicazione) {
+        this.dataPublicazione = dataPublicazione;
+        this.isAttivo = true;
     }
 
     @Override
@@ -32,7 +45,9 @@ public class Unlike {
         return "Unlike{" +
                 "idUnlike=" + idUnlike +
                 ", joinTable=" + joinTable +
-                ", post=" + post +
+                ", joinColumn=" + joinColumn +
+                ", dataPublicazione=" + dataPublicazione +
+                ", isAttivo=" + isAttivo +
                 '}';
     }
 
@@ -52,11 +67,27 @@ public class Unlike {
         this.joinTable = joinTable;
     }
 
-    public List<Post> getPost() {
-        return post;
+    public Set<PostUnliker> getJoinColumn() {
+        return joinColumn;
     }
 
-    public void setPost(List<Post> post) {
-        this.post = post;
+    public void setJoinColumn(Set<PostUnliker> joinColumn) {
+        this.joinColumn = joinColumn;
+    }
+
+    public OffsetDateTime getDataPublicazione() {
+        return dataPublicazione;
+    }
+
+    public void setDataPublicazione(OffsetDateTime dataPublicazione) {
+        this.dataPublicazione = dataPublicazione;
+    }
+
+    public Boolean getAttivo() {
+        return isAttivo;
+    }
+
+    public void setAttivo(Boolean attivo) {
+        isAttivo = attivo;
     }
 }

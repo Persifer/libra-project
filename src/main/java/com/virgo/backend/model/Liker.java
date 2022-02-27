@@ -19,9 +19,12 @@ public class Liker {
     @OneToMany(mappedBy = "liker")
     private Set<PostLiker> post;
 
+    private Boolean isAttivo = true;
+
     public Liker() {
         super();
     }
+
 
     public Liker(OffsetDateTime dataPublicazione) {
         this.dataPublicazione = dataPublicazione;
@@ -31,6 +34,7 @@ public class Liker {
         this.dataPublicazione = dataPublicazione;
         this.utente = utente;
         this.post = post;
+        this.isAttivo = true;
     }
 
     public Liker(Integer idLike, OffsetDateTime dataPublicazione, Set<UserLiker> utente, Set<PostLiker> post) {
@@ -38,6 +42,7 @@ public class Liker {
         this.dataPublicazione = dataPublicazione;
         this.utente = utente;
         this.post = post;
+        this.isAttivo = true;
     }
 
     @Override
@@ -71,5 +76,21 @@ public class Liker {
 
     public void setPost(Set<PostLiker> post) {
         this.post = post;
+    }
+
+    public OffsetDateTime getDataPublicazione() {
+        return dataPublicazione;
+    }
+
+    public void setDataPublicazione(OffsetDateTime dataPublicazione) {
+        this.dataPublicazione = dataPublicazione;
+    }
+
+    public Boolean getAttivo() {
+        return isAttivo;
+    }
+
+    public void setAttivo(Boolean attivo) {
+        isAttivo = attivo;
     }
 }

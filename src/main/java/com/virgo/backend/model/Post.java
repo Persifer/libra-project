@@ -28,11 +28,8 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private Set<PostLiker> numberOfLike = null;
 
-    @ManyToMany
-    @JoinTable(name = "post_unlike",joinColumns =
-    @JoinColumn(name="idPost"),inverseJoinColumns =
-    @JoinColumn(name="idLike"))
-    private List<Unlike> unlike = null;
+    @OneToMany(mappedBy = "post")
+    private Set<PostUnliker> unlike;
 
     public Post(){
         super();
@@ -71,7 +68,7 @@ public class Post {
     // Costruttore con tutti i parametri
     public Post(Integer idPost, String titolo, String descrizione, String photoPath, OffsetDateTime dataPublicazione,
                 OffsetDateTime dataAggiornamento, Boolean isAttivo, Utente idProprietario,
-                Set<PostLiker> liker, List<Unlike> unlike) {
+                Set<PostLiker> liker, Set<PostUnliker> unlike) {
         this.idPost = idPost;
         this.titolo = titolo;
         this.descrizione = descrizione;
@@ -180,11 +177,11 @@ public class Post {
         this.numberOfLike = liker;
     }
 
-    public List<Unlike> getUnlike() {
+    public Set<PostUnliker> getUnlike() {
         return unlike;
     }
 
-    public void setUnlike(List<Unlike> unlike) {
+    public void setUnlike(Set<PostUnliker> unlike) {
         this.unlike = unlike;
     }
 }
