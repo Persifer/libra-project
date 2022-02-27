@@ -1,7 +1,5 @@
 package com.virgo.backend.model;
 
-import com.virgo.backend.model.compoundkeys.PostLiker;
-
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.List;

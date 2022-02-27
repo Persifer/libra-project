@@ -1,7 +1,8 @@
-package com.virgo.backend.model.compoundkeys;
+package com.virgo.backend.model;
 
 import com.virgo.backend.model.Liker;
 import com.virgo.backend.model.Post;
+import com.virgo.backend.model.compoundkeys.PostLikerCompounKey;
 
 import javax.persistence.*;
 
@@ -23,6 +24,11 @@ public class PostLiker {
 
     public PostLiker() {
         super();
+    }
+
+    public PostLiker(Post post, Liker liker) {
+        this.post = post;
+        this.liker = liker;
     }
 
     public PostLiker(PostLikerCompounKey idPostLiker, Post post, Liker liker) {

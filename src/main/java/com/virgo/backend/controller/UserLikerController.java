@@ -1,9 +1,13 @@
 package com.virgo.backend.controller;
 
 import com.virgo.backend.controller.dto.LikeDto;
+import com.virgo.backend.exception.LikerException;
 import com.virgo.backend.exception.PostException;
 import com.virgo.backend.exception.UtenteException;
+import com.virgo.backend.model.Post;
+import com.virgo.backend.model.PostLiker;
 import com.virgo.backend.model.UserLiker;
+import com.virgo.backend.service.PostLikerService;
 import com.virgo.backend.service.UserLikerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,12 +25,22 @@ public class UserLikerController {
     @Autowired
     private UserLikerService userLikerService;
 
-    @PostMapping(value = "/addLike",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Autowired
+    private PostLikerService postLikerService;
+
+    @PostMapping(value = "/addLike", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addLikeToPost(@RequestBody LikeDto postToLike){
         try{
-            UserLiker confirmation =  userLikerService.addLikeToPost(postToLike);
+            UserLiker userConfirmation =  userLikerService.addLikeToUser(postToLike);
+            PostLiker postConfirmation = postLikerService.addLikeToPost(postToLike, userConfirmation.getLiker());
 
-            return new ResponseEntity<String>("Like inserito correttamente", HttpStatus.OK);
+            if( postConfirmation != null ){
+                return new ResponseEntity<String>("Like inserito correttamente", HttpStatus.OK);
+            }else{
+
+                return new ResponseEntity<String>("Unknown error. Contact the administrator", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
         }catch (UtenteException | PostException error){
             return new ResponseEntity<String>(error.getMessage(), HttpStatus.BAD_REQUEST);
         }

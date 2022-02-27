@@ -24,6 +24,11 @@ public class UserLiker {
         super();
     }
 
+    public UserLiker(Utente utente, Liker liker) {
+        this.utente = utente;
+        this.liker = liker;
+    }
+
     public UserLiker(UserLikeComposedKey idElement, Utente utente, Liker liker) {
         this.idElement = idElement;
         this.utente = utente;
