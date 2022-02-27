@@ -17,7 +17,7 @@ public class Ruolo {
     private Boolean isAttivo;
 
     @OneToMany(mappedBy = "ruolo")
-    private List<Utente> utentiConRuolo = null;
+    private List<Utente> utentiConRuolo;
 
     public Ruolo() {
         super();

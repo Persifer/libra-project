@@ -133,7 +133,7 @@ public class PostService {
             throw new UtenteException("L'utente inserito non esiste!");
         }
     }
-
+    
     public Post deletePost(DeletePostDto data) throws UtenteException {
         Utente loggedUser = utenteService.login(new Utente(data.getUsername(),data.getPassword()));
 
@@ -144,5 +144,12 @@ public class PostService {
         }
     }
 
+
+    public Post getSinglePost(Integer idPost){
+
+        Optional<Post> wantedPost = postRepo.findById(idPost);
+        return wantedPost.orElse(null);
+
+    }
 
 }

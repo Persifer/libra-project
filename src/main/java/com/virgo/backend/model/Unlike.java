@@ -1,61 +1,93 @@
 package com.virgo.backend.model;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
 public class Unlike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idLike;
+    private Integer idUnlike;
 
-    @ManyToMany(mappedBy = "unlikeRilasciati")
-    private List<Utente> utente;
+    @OneToMany(mappedBy = "unlike")
+    private Set<UserUnliker> joinTable;
 
-    @ManyToMany(mappedBy = "unlike")
-    private List<Post> post;
+    @OneToMany(mappedBy = "unlike")
+    private Set<PostUnliker> joinColumn;
+
+    @Column(nullable = false)
+    private OffsetDateTime dataPublicazione;
+
+    private Boolean isAttivo = true;
 
     public Unlike(){
         super();
     }
 
-    public Unlike(Integer idLike, List<Utente> utente, List<Post> post) {
-        this.idLike = idLike;
-        this.utente = utente;
-        this.post = post;
+    public Unlike(Integer idUnlike, Set<UserUnliker> joinTable, Set<PostUnliker> joinColumn, OffsetDateTime dataPublicazione) {
+        this.idUnlike = idUnlike;
+        this.joinTable = joinTable;
+        this.joinColumn = joinColumn;
+        this.dataPublicazione = dataPublicazione;
+        this.isAttivo = true;
+    }
+
+    public Unlike(OffsetDateTime dataPublicazione) {
+        this.dataPublicazione = dataPublicazione;
+        this.isAttivo = true;
     }
 
     @Override
     public String toString() {
         return "Unlike{" +
-                "idLike=" + idLike +
-                ", utente=" + utente +
-                ", post=" + post +
+                "idUnlike=" + idUnlike +
+                ", joinTable=" + joinTable +
+                ", joinColumn=" + joinColumn +
+                ", dataPublicazione=" + dataPublicazione +
+                ", isAttivo=" + isAttivo +
                 '}';
     }
 
-    public Integer getIdLike() {
-        return idLike;
+    public Integer getIdUnlike() {
+        return idUnlike;
     }
 
-    public void setIdLike(Integer idLike) {
-        this.idLike = idLike;
+    public void setIdUnlike(Integer idUnlike) {
+        this.idUnlike = idUnlike;
     }
 
-    public List<Utente> getUtente() {
-        return utente;
+    public Set<UserUnliker> getJoinTable() {
+        return joinTable;
     }
 
-    public void setUtente(List<Utente> utente) {
-        this.utente = utente;
+    public void setJoinTable(Set<UserUnliker> joinTable) {
+        this.joinTable = joinTable;
     }
 
-    public List<Post> getPost() {
-        return post;
+    public Set<PostUnliker> getJoinColumn() {
+        return joinColumn;
     }
 
-    public void setPost(List<Post> post) {
-        this.post = post;
+    public void setJoinColumn(Set<PostUnliker> joinColumn) {
+        this.joinColumn = joinColumn;
+    }
+
+    public OffsetDateTime getDataPublicazione() {
+        return dataPublicazione;
+    }
+
+    public void setDataPublicazione(OffsetDateTime dataPublicazione) {
+        this.dataPublicazione = dataPublicazione;
+    }
+
+    public Boolean getAttivo() {
+        return isAttivo;
+    }
+
+    public void setAttivo(Boolean attivo) {
+        isAttivo = attivo;
     }
 }

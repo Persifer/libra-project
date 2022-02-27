@@ -2,6 +2,7 @@ package com.virgo.backend.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="Utente")
@@ -22,20 +23,14 @@ public class Utente {
     private List<Post> postList;
 
     @ManyToOne
-    @JoinColumn(name = "ruoloUtente")
+    @JoinColumn(name = "idRuolo")
     private Ruolo ruolo = null;
 
-    @ManyToMany
-    @JoinTable(name = "Like_Utente",joinColumns =
-    @JoinColumn(name="idUtente"),inverseJoinColumns =
-    @JoinColumn(name="idLike"))
-    private List<Liker> likeRilasciati = null;
+    @OneToMany(mappedBy="utente")
+    private Set<UserLiker> likeRilasciati;
 
-    @ManyToMany
-    @JoinTable(name = "Unlike_Utente",joinColumns =
-    @JoinColumn(name="idUtente"),inverseJoinColumns =
-    @JoinColumn(name="idLike"))
-    private List<Unlike> unlikeRilasciati = null;
+    @OneToMany(mappedBy = "utenteUnlike")
+    private Set<UserUnliker> unlikeRilasciati = null;
 
 
     public Utente(){
@@ -43,7 +38,7 @@ public class Utente {
     }
 
     public Utente(String username, String nome, String cognome, String email, String password,
-                  List<Post> postList, Ruolo ruolo, List<Liker> likeRilasciati, List<Unlike> unlikeRilasciati) {
+                  List<Post> postList, Ruolo ruolo) {
         this.username = username;
         this.nome = nome;
         this.cognome = cognome;
@@ -51,12 +46,10 @@ public class Utente {
         this.password = password;
         this.postList = postList;
         this.ruolo = ruolo;
-        this.likeRilasciati = likeRilasciati;
-        this.unlikeRilasciati = unlikeRilasciati;
     }
 
     public Utente(Integer idUtente, String username, String nome, String cognome, String email, String password,
-                  List<Post> postList, Ruolo ruolo, List<Liker> likeRilasciati, List<Unlike> unlikeRilasciati) {
+                  List<Post> postList, Ruolo ruolo, Set<UserLiker> likeRilasciati, Set<UserUnliker> unlikeRilasciati) {
         this.idUtente = idUtente;
         this.username = username;
         this.nome = nome;
@@ -87,7 +80,14 @@ public class Utente {
         this.password = password;
     }
 
-
+    public Utente(String username, String nome, String cognome, String email, String password, Ruolo ruolo) {
+        this.username = username;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+        this.password = password;
+        this.ruolo = ruolo;
+    }
 
     @Override
     public String toString() {
@@ -169,19 +169,19 @@ public class Utente {
         this.postList = postList;
     }
 
-    public List<Liker> getLikeRilasciati() {
+    public Set<UserLiker> getLikeRilasciati() {
         return likeRilasciati;
     }
 
-    public void setLikeRilasciati(List<Liker> likeRilasciati) {
+    public void setLikeRilasciati(Set<UserLiker> likeRilasciati) {
         this.likeRilasciati = likeRilasciati;
     }
 
-    public List<Unlike> getUnlikeRilasciati() {
+    public Set<UserUnliker> getUnlikeRilasciati() {
         return unlikeRilasciati;
     }
 
-    public void setUnlikeRilasciati(List<Unlike> unlikeRilasciati) {
+    public void setUnlikeRilasciati(Set<UserUnliker> unlikeRilasciati) {
         this.unlikeRilasciati = unlikeRilasciati;
     }
 
