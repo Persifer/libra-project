@@ -2,16 +2,17 @@ package com.virgo.backend.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
 public class Unlike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idLike;
+    private Integer idUnlike;
 
-    @ManyToMany(mappedBy = "unlikeRilasciati")
-    private List<Utente> utente;
+    @OneToMany(mappedBy = "unlike")
+    private Set<UserUnliker> joinTable;
 
     @ManyToMany(mappedBy = "unlike")
     private List<Post> post;
@@ -20,35 +21,35 @@ public class Unlike {
         super();
     }
 
-    public Unlike(Integer idLike, List<Utente> utente, List<Post> post) {
-        this.idLike = idLike;
-        this.utente = utente;
+    public Unlike(Integer idUnlike, Set<UserUnliker> joinTable, List<Post> post) {
+        this.idUnlike = idUnlike;
+        this.joinTable = joinTable;
         this.post = post;
     }
 
     @Override
     public String toString() {
         return "Unlike{" +
-                "idLike=" + idLike +
-                ", utente=" + utente +
+                "idUnlike=" + idUnlike +
+                ", joinTable=" + joinTable +
                 ", post=" + post +
                 '}';
     }
 
-    public Integer getIdLike() {
-        return idLike;
+    public Integer getIdUnlike() {
+        return idUnlike;
     }
 
-    public void setIdLike(Integer idLike) {
-        this.idLike = idLike;
+    public void setIdUnlike(Integer idUnlike) {
+        this.idUnlike = idUnlike;
     }
 
-    public List<Utente> getUtente() {
-        return utente;
+    public Set<UserUnliker> getJoinTable() {
+        return joinTable;
     }
 
-    public void setUtente(List<Utente> utente) {
-        this.utente = utente;
+    public void setJoinTable(Set<UserUnliker> joinTable) {
+        this.joinTable = joinTable;
     }
 
     public List<Post> getPost() {

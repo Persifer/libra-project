@@ -29,11 +29,8 @@ public class Utente {
     @OneToMany(mappedBy="utente")
     private Set<UserLiker> likeRilasciati;
 
-    @ManyToMany
-    @JoinTable(name = "Unlike_Utente",joinColumns =
-    @JoinColumn(name="idUtente"),inverseJoinColumns =
-    @JoinColumn(name="idLike"))
-    private List<Unlike> unlikeRilasciati = null;
+    @OneToMany(mappedBy = "utenteUnlike")
+    private Set<UserUnliker> unlikeRilasciati = null;
 
 
     public Utente(){
@@ -49,12 +46,10 @@ public class Utente {
         this.password = password;
         this.postList = postList;
         this.ruolo = ruolo;
-        this.likeRilasciati = likeRilasciati;
-        this.unlikeRilasciati = unlikeRilasciati;
     }
 
     public Utente(Integer idUtente, String username, String nome, String cognome, String email, String password,
-                  List<Post> postList, Ruolo ruolo, Set<UserLiker> likeRilasciati, List<Unlike> unlikeRilasciati) {
+                  List<Post> postList, Ruolo ruolo, Set<UserLiker> likeRilasciati, Set<UserUnliker> unlikeRilasciati) {
         this.idUtente = idUtente;
         this.username = username;
         this.nome = nome;
@@ -182,11 +177,11 @@ public class Utente {
         this.likeRilasciati = likeRilasciati;
     }
 
-    public List<Unlike> getUnlikeRilasciati() {
+    public Set<UserUnliker> getUnlikeRilasciati() {
         return unlikeRilasciati;
     }
 
-    public void setUnlikeRilasciati(List<Unlike> unlikeRilasciati) {
+    public void setUnlikeRilasciati(Set<UserUnliker> unlikeRilasciati) {
         this.unlikeRilasciati = unlikeRilasciati;
     }
 
