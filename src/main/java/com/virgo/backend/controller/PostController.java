@@ -207,7 +207,7 @@ public class PostController {
         try{
             Post deletedPost = postService.deletePost(data);
             if(deletedPost!= null){
-                return new ResponseEntity<String>("Post cancellato correttamente", HttpStatus.NO_CONTENT);
+                return new ResponseEntity<String>("Post cancellato correttamente", HttpStatus.OK);
             }else{
                 return new ResponseEntity<String>("Non si è creata l'entità post", HttpStatus.INTERNAL_SERVER_ERROR);
             }

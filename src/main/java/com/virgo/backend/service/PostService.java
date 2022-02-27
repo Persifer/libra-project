@@ -7,6 +7,7 @@ import com.virgo.backend.exception.UtenteException;
 import com.virgo.backend.model.Post;
 import com.virgo.backend.model.Utente;
 import com.virgo.backend.repository.PostCrudRepository;
+import com.virgo.backend.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -133,17 +134,6 @@ public class PostService {
             throw new UtenteException("L'utente inserito non esiste!");
         }
     }
-    
-    public Post deletePost(DeletePostDto data) throws UtenteException {
-        Utente loggedUser = utenteService.login(new Utente(data.getUsername(),data.getPassword()));
-
-        if(loggedUser != null){
-            return null;
-        }else{
-            throw new UtenteException("L'utente inserito non esiste!");
-        }
-    }
-
 
     public Post getSinglePost(Integer idPost){
 
@@ -151,5 +141,32 @@ public class PostService {
         return wantedPost.orElse(null);
 
     }
+
+    public Post deletePost(DeletePostDto data) throws UtenteException, PostException {
+        Utente loggedUser = utenteService.login(new Utente(data.getUsername(),data.getPassword()));
+
+        if(loggedUser != null){
+            Post deletedPost = getSinglePost(data.getIdPost());
+
+            if( deletedPost != null){
+                if(deletedPost.getIdProprietario().getUsername().equals(loggedUser.getUsername()) ||
+                        loggedUser.getRuolo().getNome().equals(Constants.ADMINROLE)){
+                    deletedPost.setAttivo(false);
+                    postRepo.save(deletedPost);
+
+                    return deletedPost;
+                }else{
+                    throw new UtenteException("L'utente inserito non può eliminare il post!");
+                }
+            }else{
+                throw new PostException("Il post non esiste");
+            }
+
+        }else{
+            throw new UtenteException("L'utente inserito non esiste!");
+        }
+    }
+
+
 
 }
