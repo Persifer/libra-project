@@ -1,5 +1,6 @@
 package com.virgo.backend.controller;
 
+import com.virgo.backend.controller.dto.DeletePostDto;
 import com.virgo.backend.controller.dto.ModifyPostDto;
 import com.virgo.backend.controller.dto.PostDto;
 import com.virgo.backend.exception.PostException;
@@ -199,9 +200,22 @@ public class PostController {
             return new ResponseEntity<String>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
-     }
+    }
 
+    @PutMapping(value = "/delete", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> deletePost(@RequestBody DeletePostDto data){
+        try{
+            Post deletedPost = postService.deletePost(data);
+            if(deletedPost!= null){
+                return new ResponseEntity<String>("Post cancellato correttamente", HttpStatus.NO_CONTENT);
+            }else{
+                return new ResponseEntity<String>("Non si è creata l'entità post", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }catch (Exception error){
+            return new ResponseEntity<String>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
+    }
 
 
 }

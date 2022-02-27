@@ -1,5 +1,6 @@
 package com.virgo.backend.service;
 
+import com.virgo.backend.controller.dto.DeletePostDto;
 import com.virgo.backend.controller.dto.ModifyPostDto;
 import com.virgo.backend.exception.PostException;
 import com.virgo.backend.exception.UtenteException;
@@ -41,7 +42,6 @@ public class PostService {
         }
 
     }
-
 
     public List<Post> getProfilePost(String username, String password, Post post) throws UtenteException, Exception{
         Utente user = utenteService.login(new Utente(username, password));
@@ -129,6 +129,16 @@ public class PostService {
             }else{
                 throw new UtenteException("Il post selezionato non esiste!");
             }
+        }else{
+            throw new UtenteException("L'utente inserito non esiste!");
+        }
+    }
+
+    public Post deletePost(DeletePostDto data) throws UtenteException {
+        Utente loggedUser = utenteService.login(new Utente(data.getUsername(),data.getPassword()));
+
+        if(loggedUser != null){
+            return null;
         }else{
             throw new UtenteException("L'utente inserito non esiste!");
         }
