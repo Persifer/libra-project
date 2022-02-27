@@ -1,12 +1,9 @@
 package com.virgo.backend.service;
 
-import com.virgo.backend.controller.UserLikerController;
 import com.virgo.backend.controller.dto.LikeDto;
 import com.virgo.backend.exception.LikerException;
-import com.virgo.backend.exception.PostException;
 import com.virgo.backend.exception.UtenteException;
 import com.virgo.backend.model.Liker;
-import com.virgo.backend.model.Post;
 import com.virgo.backend.model.UserLiker;
 import com.virgo.backend.model.Utente;
 import com.virgo.backend.model.compoundkeys.UserLikeComposedKey;

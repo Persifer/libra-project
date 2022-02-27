@@ -1,10 +1,8 @@
 package com.virgo.backend.controller;
 
 import com.virgo.backend.controller.dto.LikeDto;
-import com.virgo.backend.exception.LikerException;
 import com.virgo.backend.exception.PostException;
 import com.virgo.backend.exception.UtenteException;
-import com.virgo.backend.model.Post;
 import com.virgo.backend.model.PostLiker;
 import com.virgo.backend.model.UserLiker;
 import com.virgo.backend.service.PostLikerService;
@@ -20,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/likeHandler")
-public class UserLikerController {
+public class LikeHandlerController {
 
     @Autowired
     private UserLikerService userLikerService;
