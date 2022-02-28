@@ -21,4 +21,7 @@ public class UnlikeService {
     }
 
 
+    public void deleteElement(Integer idUnlike) {
+        unlikeCrudRepository.deleteByIdUnlike(idUnlike);
+    }
 }

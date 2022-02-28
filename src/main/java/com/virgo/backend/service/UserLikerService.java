@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service("userLikerService")
 @Transactional
 public class UserLikerService {
@@ -54,6 +56,16 @@ public class UserLikerService {
             throw new UtenteException("L'utente che sta provando a mettere il like non esiste");
         }
 
+    }
+
+    public UserLiker isUserInside(Integer idUtene){
+        Optional<UserLiker> foundedId = userLikerCrudRepository.getByUtente(idUtene);
+        return foundedId.orElse(null);
+    }
+
+    public void deleteLike(UserLiker likeToDel){
+        likeToDel.setAttivo(false);
+        userLikerCrudRepository.save(likeToDel);
     }
 
 

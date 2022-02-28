@@ -4,6 +4,7 @@ import com.virgo.backend.controller.dto.LikeDto;
 import com.virgo.backend.exception.UnlikerException;
 import com.virgo.backend.exception.UtenteException;
 import com.virgo.backend.model.Unlike;
+import com.virgo.backend.model.UserLiker;
 import com.virgo.backend.model.UserUnliker;
 import com.virgo.backend.model.Utente;
 import com.virgo.backend.model.compoundkeys.UserUnlikerComposedKey;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Service("userUnlikerServie")
+@Service("userUnlikerService")
 @Transactional
 public class UserUnlikerService {
 
@@ -27,11 +28,21 @@ public class UserUnlikerService {
     @Autowired
     private UnlikeService unlikeService;
 
+    @Autowired
+    private UserLikerService userLikerService;
+
     public UserUnliker addUnlike(LikeDto data) throws UtenteException {
 
         Utente loggedUser = utenteService.login(new Utente(data.getUsername(), data.getPassword()));
 
         if(loggedUser != null){
+
+            UserLiker probLike = userLikerService.isUserInside(loggedUser.getIdUtente());
+
+            if(probLike != null){
+                userLikerService.deleteLike(probLike);
+            }
+
             Unlike newUnlike = unlikeService.createLike();
 
             if(newUnlike != null){
@@ -57,7 +68,8 @@ public class UserUnlikerService {
     }
 
     public void deleteUnlike(UserUnliker unlikeToDel){
-        unlikeToDel.setAttivo(false);
-        userUnlikerCrudRepository.save(unlikeToDel);
+        Integer idUnlike = unlikeToDel.getUnlike().getIdUnlike();
+        userUnlikerCrudRepository.deleteElement(unlikeToDel.getUtente().getIdUtente(), unlikeToDel.getUnlike().getIdUnlike());
+        unlikeService.deleteElement(idUnlike);
     }
 }

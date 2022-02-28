@@ -16,7 +16,6 @@ public class LikerService {
     private LikerCrudRepository likerCrudRepository;
 
     public Liker createNewLike(){
-
         return likerCrudRepository.save(new Liker(OffsetDateTime.now()));
     }
 }
