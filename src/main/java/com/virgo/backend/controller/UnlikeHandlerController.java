@@ -34,6 +34,7 @@ public class UnlikeHandlerController {
             UserUnliker userUnlikeEntity = userUnlikerService.addUnlike(data);
             if(userUnlikeEntity != null){
                 PostUnliker unlikedEntity = postUnlikerService.addUnlike(data, userUnlikeEntity.getUnlike());
+
                 if(unlikedEntity != null){
                     return new ResponseEntity<String>("Unlike inserito correttamente", HttpStatus.OK);
                 }else{

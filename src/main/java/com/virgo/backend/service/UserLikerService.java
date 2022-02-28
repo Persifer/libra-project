@@ -67,9 +67,13 @@ public class UserLikerService {
         return foundedId.orElse(null);
     }
 
-    public void deleteLike(UserLiker likeToDel){
+    public Boolean deleteLike(UserLiker likeToDel){
         likeToDel.setAttivo(false);
-        userLikerCrudRepository.save(likeToDel);
+        Long response = userLikerCrudRepository.deleteUserLikerByIdElement_IdUtenteAndIdElement_IdLiker(
+                likeToDel.getUtente().getIdUtente(), likeToDel.getLiker().getIdLike()
+        );
+
+        return response == 1;
     }
 
 

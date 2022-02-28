@@ -15,4 +15,6 @@ public interface UserLikerCrudRepository extends CrudRepository<UserLiker, UserL
             nativeQuery = true
     )
     public Optional<UserLiker> getByUtente(Integer idUtente);
+
+    public Long deleteUserLikerByIdElement_IdUtenteAndIdElement_IdLiker(Integer idUtente, Integer idLike);
 }
