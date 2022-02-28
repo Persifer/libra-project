@@ -20,6 +20,8 @@ public class UserLiker {
     @JoinColumn(name = "id_like")
     private Liker liker;
 
+    private Boolean isAttivo;
+
     public UserLiker() {
         super();
     }
@@ -27,12 +29,14 @@ public class UserLiker {
     public UserLiker(Utente utente, Liker liker) {
         this.utente = utente;
         this.liker = liker;
+        this.isAttivo = true;
     }
 
     public UserLiker(UserLikeComposedKey idElement, Utente utente, Liker liker) {
         this.idElement = idElement;
         this.utente = utente;
         this.liker = liker;
+        this.isAttivo = true;
     }
 
     public UserLikeComposedKey getIdElement() {
@@ -57,5 +61,13 @@ public class UserLiker {
 
     public void setLiker(Liker liker) {
         this.liker = liker;
+    }
+
+    public Boolean getAttivo() {
+        return isAttivo;
+    }
+
+    public void setAttivo(Boolean attivo) {
+        isAttivo = attivo;
     }
 }

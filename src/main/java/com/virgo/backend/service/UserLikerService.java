@@ -5,6 +5,7 @@ import com.virgo.backend.exception.LikerException;
 import com.virgo.backend.exception.UtenteException;
 import com.virgo.backend.model.Liker;
 import com.virgo.backend.model.UserLiker;
+import com.virgo.backend.model.UserUnliker;
 import com.virgo.backend.model.Utente;
 import com.virgo.backend.model.compoundkeys.UserLikeComposedKey;
 import com.virgo.backend.repository.UserLikerCrudRepository;
@@ -26,12 +27,18 @@ public class UserLikerService {
     private LikerService likerService;
 
     @Autowired
-    private PostService postService;
+    private UserUnlikerService userUnlikerService;
 
     public UserLiker addLikeToUser(LikeDto data) throws UtenteException, LikerException {
         Utente loggedUser = utenteService.login(new Utente(data.getUsername(), data.getPassword()));
 
         if(loggedUser != null){
+
+            UserUnliker probUnlike = userUnlikerService.isUserInside(loggedUser.getIdUtente());
+
+            if(probUnlike != null){
+                userUnlikerService.deleteUnlike(probUnlike);
+            }
 
             Liker newLike = likerService.createNewLike();
 

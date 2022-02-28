@@ -20,6 +20,8 @@ public class UserUnliker {
     @JoinColumn(name = "id_unlike")
     private Unlike unlike;
 
+    private Boolean isAttivo;
+
     public UserUnliker() {
         super();
     }
@@ -28,11 +30,13 @@ public class UserUnliker {
         this.id = id;
         this.utenteUnlike = utente;
         this.unlike = unlike;
+        this.isAttivo = true;
     }
 
     public UserUnliker(Utente utente, Unlike unlike) {
         this.utenteUnlike = utente;
         this.unlike = unlike;
+        this.isAttivo = true;
     }
 
     public UserUnlikerComposedKey getId() {
@@ -57,5 +61,21 @@ public class UserUnliker {
 
     public void setUnlike(Unlike unlike) {
         this.unlike = unlike;
+    }
+
+    public Utente getUtenteUnlike() {
+        return utenteUnlike;
+    }
+
+    public void setUtenteUnlike(Utente utenteUnlike) {
+        this.utenteUnlike = utenteUnlike;
+    }
+
+    public Boolean getAttivo() {
+        return isAttivo;
+    }
+
+    public void setAttivo(Boolean attivo) {
+        isAttivo = attivo;
     }
 }

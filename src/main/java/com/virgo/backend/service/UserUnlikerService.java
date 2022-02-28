@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service("userUnlikerServie")
 @Transactional
 public class UserUnlikerService {
@@ -46,5 +48,16 @@ public class UserUnlikerService {
             throw new UtenteException("L'utente inserito non esiste");
         }
 
+    }
+
+    public UserUnliker isUserInside(Integer idUtene){
+        Optional<UserUnliker> foundedId = userUnlikerCrudRepository.getByUtente(idUtene);
+
+        return foundedId.orElse(null);
+    }
+
+    public void deleteUnlike(UserUnliker unlikeToDel){
+        unlikeToDel.setAttivo(false);
+        userUnlikerCrudRepository.save(unlikeToDel);
     }
 }
