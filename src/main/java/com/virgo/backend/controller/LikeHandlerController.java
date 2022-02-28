@@ -33,17 +33,17 @@ public class LikeHandlerController {
             PostLiker postConfirmation = postLikerService.addLikeToPost(postToLike, userConfirmation.getLiker());
 
             if( postConfirmation != null ){
-                return new ResponseEntity<String>("Like inserito correttamente", HttpStatus.OK);
+                return new ResponseEntity<>("Like inserito correttamente", HttpStatus.OK);
             }else{
 
-                return new ResponseEntity<String>("Unknown error. Contact the administrator", HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>("Liker - Unknown error. Contact the administrator", HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
         }catch (UtenteException | PostException error){
-            return new ResponseEntity<String>(error.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Liker - " + error.getMessage(), HttpStatus.BAD_REQUEST);
         }
         catch (Exception error){
-            return new ResponseEntity<String>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Liker - " + error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

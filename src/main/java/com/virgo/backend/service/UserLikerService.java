@@ -39,7 +39,11 @@ public class UserLikerService {
             UserUnliker probUnlike = userUnlikerService.isUserInside(loggedUser.getIdUtente());
 
             if(probUnlike != null){
-                userUnlikerService.deleteUnlike(probUnlike);
+                if(userUnlikerService.deleteUnlike(probUnlike)){
+                    System.out.print("Elemento eliminato con successo");
+                }else{
+                    System.out.print("Elemento NON eliminato con successo");
+                }
             }
 
             Liker newLike = likerService.createNewLike();
@@ -49,11 +53,11 @@ public class UserLikerService {
                         new UserLikeComposedKey(loggedUser.getIdUtente(), newLike.getIdLike())
                         ,loggedUser, newLike));
             }else{
-                throw new LikerException("Problemi interni per la creazione del like!");
+                throw new LikerException("UserLikerS -Problemi interni per la creazione del like!");
             }
 
         }else{
-            throw new UtenteException("L'utente che sta provando a mettere il like non esiste");
+            throw new UtenteException("UserLikerS - L'utente che sta provando a mettere il like non esiste");
         }
 
     }

@@ -16,10 +16,7 @@ public interface UserUnlikerCrudRepository extends CrudRepository<UserUnliker, U
     public Optional<UserUnliker> getByUtente(Integer idUtente);
 
 
-    @Query(
-            value = "DELETE FROM user_unliker u WHERE u.id_utente = ?1 AND u.id_unlike = ?2",
-            nativeQuery = true
-    )
-    public void deleteElement(Integer idUtente, Integer idUnlike);
+
+    public Long deleteUserUnlikerById_IdUtenteAndId_IdUnlike(Integer idUtente, Integer idUnlike);
 
 }

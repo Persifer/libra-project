@@ -53,10 +53,10 @@ public class UserUnlikerService {
                         )
                 );
             }else{
-                throw new UtenteException("An unkown error occurred. Contact the admin");
+                throw new UtenteException("UserUnlikerS - An unkown error occurred. Contact the admin");
             }
         }else{
-            throw new UtenteException("L'utente inserito non esiste");
+            throw new UtenteException("UserUnlikerS - L'utente inserito non esiste");
         }
 
     }
@@ -67,9 +67,9 @@ public class UserUnlikerService {
         return foundedId.orElse(null);
     }
 
-    public void deleteUnlike(UserUnliker unlikeToDel){
+    public Boolean deleteUnlike(UserUnliker unlikeToDel){
         Integer idUnlike = unlikeToDel.getUnlike().getIdUnlike();
-        userUnlikerCrudRepository.deleteElement(unlikeToDel.getUtente().getIdUtente(), unlikeToDel.getUnlike().getIdUnlike());
-        unlikeService.deleteElement(idUnlike);
+        Long response = userUnlikerCrudRepository.deleteUserUnlikerById_IdUtenteAndId_IdUnlike(unlikeToDel.getUtente().getIdUtente(), unlikeToDel.getUnlike().getIdUnlike());
+        return response == 1;
     }
 }
