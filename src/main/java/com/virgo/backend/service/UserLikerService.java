@@ -36,24 +36,29 @@ public class UserLikerService {
 
         if(loggedUser != null){
 
-            UserUnliker probUnlike = userUnlikerService.isUserInside(loggedUser.getIdUtente());
 
-            if(probUnlike != null){
-                if(userUnlikerService.deleteUnlike(probUnlike)){
-                    System.out.print("Elemento eliminato con successo");
-                }else{
-                    System.out.print("Elemento NON eliminato con successo");
+            if (userLikerCrudRepository.getByUtente(loggedUser.getIdUtente()).isEmpty()) {
+                UserUnliker probUnlike = userUnlikerService.isUserInside(loggedUser.getIdUtente());
+
+                if(probUnlike != null){
+                    if(userUnlikerService.deleteUnlike(probUnlike)){
+                        System.out.print("Elemento eliminato con successo");
+                    }else{
+                        System.out.print("Elemento NON eliminato con successo");
+                    }
                 }
-            }
 
-            Liker newLike = likerService.createNewLike();
+                Liker newLike = likerService.createNewLike();
 
-            if(newLike != null){
-                return userLikerCrudRepository.save(new UserLiker(
-                        new UserLikeComposedKey(loggedUser.getIdUtente(), newLike.getIdLike())
-                        ,loggedUser, newLike));
-            }else{
-                throw new LikerException("UserLikerS -Problemi interni per la creazione del like!");
+                if(newLike != null){
+                    return userLikerCrudRepository.save(new UserLiker(
+                            new UserLikeComposedKey(loggedUser.getIdUtente(), newLike.getIdLike())
+                            ,loggedUser, newLike));
+                }else{
+                    throw new LikerException("UserLikerS -Problemi interni per la creazione del like!");
+                }
+            } else {
+                throw new LikerException("L'utente ha già messo like a questo post");
             }
 
         }else{

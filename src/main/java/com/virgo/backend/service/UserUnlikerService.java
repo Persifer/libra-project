@@ -37,23 +37,27 @@ public class UserUnlikerService {
 
         if(loggedUser != null){
 
-            UserLiker probLike = userLikerService.isUserInside(loggedUser.getIdUtente());
+            if (userUnlikerCrudRepository.getByUtente(loggedUser.getIdUtente()).isEmpty()) {
+                UserLiker probLike = userLikerService.isUserInside(loggedUser.getIdUtente());
 
-            if(probLike != null){
-                userLikerService.deleteLike(probLike);
-            }
+                if(probLike != null){
+                    userLikerService.deleteLike(probLike);
+                }
 
-            Unlike newUnlike = unlikeService.createLike();
+                Unlike newUnlike = unlikeService.createLike();
 
-            if(newUnlike != null){
-                return userUnlikerCrudRepository.save(
-                        new UserUnliker(
-                                new UserUnlikerComposedKey(loggedUser.getIdUtente(), newUnlike.getIdUnlike()),
-                                loggedUser, newUnlike
-                        )
-                );
-            }else{
-                throw new UtenteException("UserUnlikerS - An unkown error occurred. Contact the admin");
+                if(newUnlike != null){
+                    return userUnlikerCrudRepository.save(
+                            new UserUnliker(
+                                    new UserUnlikerComposedKey(loggedUser.getIdUtente(), newUnlike.getIdUnlike()),
+                                    loggedUser, newUnlike
+                            )
+                    );
+                }else{
+                    throw new UtenteException("UserUnlikerS - An unkown error occurred. Contact the admin");
+                }
+            } else {
+                throw new UtenteException("L'utente ha già messo dislike a questo post");
             }
         }else{
             throw new UtenteException("UserUnlikerS - L'utente inserito non esiste");
