@@ -30,7 +30,6 @@ public class UnlikeHandlerController {
     @PostMapping(value = "/addUnlike", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addUnlikeToPost(@RequestBody LikeDto data){
 
-        // TODO -> Controlla che l'utente non abbia già inserito il dislike
         try{
             UserUnliker userUnlikeEntity = userUnlikerService.addUnlike(data);
             if(userUnlikeEntity != null){

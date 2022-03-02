@@ -26,8 +26,6 @@ public class LikeHandlerController {
     @Autowired
     private PostLikerService postLikerService;
 
-    // TODO -> Controlla che l'utente non abbia già inserito il like
-
 
     @PostMapping(value = "/addLike", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addLikeToPost(@RequestBody LikeDto postToLike){
