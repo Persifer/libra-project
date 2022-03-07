@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/user", produces = "application/json")
+@CrossOrigin(origins = "*")
 public class UtenteController {
 
     @Autowired
@@ -40,7 +41,7 @@ public class UtenteController {
 
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<String> loginHandler(@RequestBody Utente user){
         try{
 
