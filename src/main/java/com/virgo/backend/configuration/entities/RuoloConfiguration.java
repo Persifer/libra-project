@@ -1,4 +1,4 @@
-package com.virgo.backend.configuration;
+package com.virgo.backend.configuration.entities;
 
 import com.virgo.backend.model.Ruolo;
 import com.virgo.backend.repository.RuoloCrudRepository;
