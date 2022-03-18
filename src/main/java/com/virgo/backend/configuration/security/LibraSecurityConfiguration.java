@@ -1,6 +1,7 @@
 package com.virgo.backend.configuration.security;
 
 import com.virgo.backend.utils.Constants;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,12 +10,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
 public class LibraSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -37,9 +41,15 @@ public class LibraSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         UserDetails antonioUser = User.builder()
                 .username("Antonio")
-                .password("password")
-                .roles(Constants.USEROLE).build();
+                .password(passwordEncoder.encode("password"))
+                .roles(Constants.USEROLE).build(); // un ruolo è solo una vista di alto livello di tutti gli utenti che si hanno nel sistema
+                // per ogni utente ci deve essere un ruolo che rappresenta autorizzazioni e permessi
 
-        return new InMemoryUserDetailsManager(antonioUser);
+        UserDetails adminUser = User.builder()
+                .username("Antonio")
+                .password(passwordEncoder.encode("password123"))
+                .roles(Constants.ADMINROLE).build();
+
+        return new InMemoryUserDetailsManager(antonioUser, adminUser);
     }
 }
