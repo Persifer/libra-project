@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import static com.virgo.backend.configuration.security.ApplicationUserRole.*;
+
 @Configuration
 @EnableWebSecurity
 public class LibraSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -42,13 +44,13 @@ public class LibraSecurityConfiguration extends WebSecurityConfigurerAdapter {
         UserDetails antonioUser = User.builder()
                 .username("Antonio")
                 .password(passwordEncoder.encode("password"))
-                .roles(Constants.USEROLE).build(); // un ruolo è solo una vista di alto livello di tutti gli utenti che si hanno nel sistema
+                .roles(UTENTE.name()).build(); // un ruolo è solo una vista di alto livello di tutti gli utenti che si hanno nel sistema
                 // per ogni utente ci deve essere un ruolo che rappresenta autorizzazioni e permessi
 
         UserDetails adminUser = User.builder()
                 .username("Antonio")
                 .password(passwordEncoder.encode("password123"))
-                .roles(Constants.ADMINROLE).build();
+                .roles(ADMIN.name()).build();
 
         return new InMemoryUserDetailsManager(antonioUser, adminUser);
     }
