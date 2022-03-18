@@ -48,7 +48,7 @@ public class LibraSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // per ogni utente ci deve essere un ruolo che rappresenta autorizzazioni e permessi
 
         UserDetails adminUser = User.builder()
-                .username("Antonio")
+                .username("Marco")
                 .password(passwordEncoder.encode("password123"))
                 .roles(ADMIN.name()).build();
 

@@ -1,15 +1,12 @@
 package com.virgo.backend.configuration.security;
 
 import com.google.common.collect.Sets;
-
 import java.util.Set;
-
-
 import static com.virgo.backend.configuration.security.ApplicationUserPermission.*;
 
 
 public enum ApplicationUserRole {
-    UTENTE(Sets.newHashSet()),
+    UTENTE(Sets.newHashSet(USER_READ)),
     ADMIN(Sets.newHashSet( USER_READ, USER_WRITE));
 
     private final Set<ApplicationUserPermission> permissions;
