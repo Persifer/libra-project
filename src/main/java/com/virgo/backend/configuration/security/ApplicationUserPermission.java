@@ -3,7 +3,11 @@ package com.virgo.backend.configuration.security;
 public enum ApplicationUserPermission {
 
     USER_READ("user:read"),
-    USER_WRITE("user:write");
+    USER_WRITE("user:write"),
+    POST_READ("post:read"),
+    POST_WRITE("post:write")
+    ;
+
 
     private final String permission;
 
