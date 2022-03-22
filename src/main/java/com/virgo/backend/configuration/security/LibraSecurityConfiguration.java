@@ -41,16 +41,21 @@ public class LibraSecurityConfiguration extends WebSecurityConfigurerAdapter {
     // È il metodo da cui si preleva l'user dal database
     protected UserDetailsService userDetailsService() {
 
-        UserDetails antonioUser = User.builder()
+        UserDetails antonioUser = User.builder() // simple user
                 .username("Antonio")
                 .password(passwordEncoder.encode("password"))
                 .roles(UTENTE.name()).build(); // un ruolo è solo una vista di alto livello di tutti gli utenti che si hanno nel sistema
                 // per ogni utente ci deve essere un ruolo che rappresenta autorizzazioni e permessi
 
-        UserDetails adminUser = User.builder()
+        UserDetails adminUser = User.builder() // admin user
                 .username("Marco")
                 .password(passwordEncoder.encode("password123"))
                 .roles(ADMIN.name()).build();
+
+        UserDetails adminTraineeUser = User.builder() // admin trainee user per similare un admin che non ha tutti i permessi
+                .username("Tom")
+                .password(passwordEncoder.encode("password123"))
+                .roles(ADMINTRAINEE.name()).build(); //ROLE_ADMINTRAINEE
 
         return new InMemoryUserDetailsManager(antonioUser, adminUser);
     }
