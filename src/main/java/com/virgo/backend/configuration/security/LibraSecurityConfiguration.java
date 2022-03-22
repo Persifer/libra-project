@@ -27,8 +27,8 @@ public class LibraSecurityConfiguration extends WebSecurityConfigurerAdapter {
         //super.configure(http);
         http
                 .authorizeHttpRequests() // vogliamo richieste autorizzate
-                .antMatchers("/","/index.hmtl") // permette di dire a spring security quali sono gli url su cui non deve richiedere username e password. Gli url whitelistati
-                .permitAll()
+                .antMatchers("/","/index.hmtl").permitAll()// permette di dire a spring security quali sono gli url su cui non deve richiedere username e password. Gli url whitelistati
+                .antMatchers("/user/**").hasRole(UTENTE.name()) // role based authentication
                 .anyRequest() // ogni richiesta deve essere autenticata
                 .authenticated() // qui diciamo che ogni richiesta deve essere autenticata
                 .and()
