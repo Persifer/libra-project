@@ -31,12 +31,14 @@ public class UserLikerService {
     @Autowired
     private UserUnlikerService userUnlikerService;
 
+    // Questa funzione si occupa di aggiungere un like ad un post da parte di un utente
     public UserLiker addLikeToUser(LikeDto data) throws UtenteException, LikerException {
+        //controllo che l'utente è loggato
         Utente loggedUser = utenteService.login(new Utente(data.getUsername(), data.getPassword()));
 
         if(loggedUser != null){
 
-
+            // TODO -> Questo controllo non permette di inserire like a più di un post. Modificalo (appena puoi)
             if (userLikerCrudRepository.getByUtente(loggedUser.getIdUtente()).isEmpty()) {
                 UserUnliker probUnlike = userUnlikerService.isUserInside(loggedUser.getIdUtente());
 

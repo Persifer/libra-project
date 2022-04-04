@@ -6,6 +6,7 @@ import com.virgo.backend.service.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,12 +19,16 @@ public class UtenteController {
     @Autowired
     private UtenteService utenteService;
 
+    // PreAuthorize takes -> hasRole("ROLE_") hasAnyRole("ROLE_") hasAuthority(permissions) hasAnyAuthority(permissions)
     @GetMapping("/getAll")
+    // this is the same of the ant matchers but in the controller as annotations
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Utente> getAllUser(){
         return utenteService.getAllUsers();
     }
 
     @PostMapping("/insert")
+    @PreAuthorize("hasAuthority('admin:read')")
     public ResponseEntity<String> registration(@RequestBody Utente newUtente){
         try{
             Utente registredUser =  utenteService.registration(newUtente);
