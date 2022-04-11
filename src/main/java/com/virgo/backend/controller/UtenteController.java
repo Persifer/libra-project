@@ -22,13 +22,13 @@ public class UtenteController {
     // PreAuthorize takes -> hasRole("ROLE_") hasAnyRole("ROLE_") hasAuthority(permissions) hasAnyAuthority(permissions)
     @GetMapping("/getAll")
     // this is the same of the ant matchers but in the controller as annotations
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')") -> commented because i prefer to use it in the security configuration but needed for educational purpose
     public List<Utente> getAllUser(){
         return utenteService.getAllUsers();
     }
 
     @PostMapping("/insert")
-    @PreAuthorize("hasAuthority('admin:read')")
+//    @PreAuthorize("hasAuthority('admin:read')") -> commented because i prefer to use it in the security configuration but needed for educational purpose
     public ResponseEntity<String> registration(@RequestBody Utente newUtente){
         try{
             Utente registredUser =  utenteService.registration(newUtente);

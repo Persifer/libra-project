@@ -20,7 +20,7 @@ import static com.virgo.backend.configuration.security.ApplicationUserPermission
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true) //indicates that we want to use the annotation for permissions
+//@EnableGlobalMethodSecurity(prePostEnabled = true) //indicates that we want to use the annotation for permissions
 public class LibraSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -32,15 +32,18 @@ public class LibraSecurityConfiguration extends WebSecurityConfigurerAdapter {
         // [!] The order we put the ant matchers MATTER. PAY ATTENTION [!]
         http
                 .csrf().disable()
-                .authorizeHttpRequests() // vogliamo richieste autorizzate
-                .antMatchers("/","/index.hmtl").permitAll()// permette di dire a spring security quali sono gli url su cui non deve richiedere username e password. Gli url whitelistati
-//                .antMatchers("/user/**").hasRole(UTENTE.name())
-//                .antMatchers("/user/**").hasAnyRole(ADMIN.name())
-//                .antMatchers(HttpMethod.GET, "/user/**").hasAuthority(USER_READ.getPermission())// role based authentication
+                .authorizeRequests() // vogliamo richieste autorizzate
+                .antMatchers("/index.hmtl").permitAll()// permette di dire a spring security quali sono gli url su cui non deve richiedere username e password. Gli url whitelistati
+                .antMatchers("/user/**").hasRole(UTENTE.name())
+                .antMatchers("/user/**").hasAnyRole(ADMIN.name())
+                .antMatchers(HttpMethod.GET, "/user/**").hasAuthority(USER_READ.getPermission())// role based authentication
                 .anyRequest() // ogni richiesta deve essere autenticata
                 .authenticated() // qui diciamo che ogni richiesta deve essere autenticata
-                .and()
-                .httpBasic(); //vogliamo che il meccanismo che forzi l'autenticazione del client sia quello base
+//                .and()
+//                .httpBasic(); //vogliamo che il meccanismo che forzi l'autenticazione del client sia quello base
+                .and()  // -> inizia il codice che indica a spring boot che tipo di pagina custom utilizzare per il login
+                .formLogin()
+                .loginPage("/login").permitAll();
 
     }
 
