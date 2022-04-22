@@ -43,7 +43,8 @@ public class LibraSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .httpBasic(); //vogliamo che il meccanismo che forzi l'autenticazione del client sia quello base
                 .and()  // -> inizia il codice che indica a spring boot che tipo di pagina custom utilizzare per il login
                 .formLogin()
-                .loginPage("/login").permitAll();
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/post", true);
 
     }
 

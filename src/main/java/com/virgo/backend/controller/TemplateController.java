@@ -13,4 +13,10 @@ public class TemplateController {
         return "login"; // deve avere lo stesso nome del file html che abbiamo in templates
 
     }
+
+    @GetMapping("post")
+    public String redirectToPost(){
+        return "post"; // deve avere lo stesso nome del file html che abbiamo in templates
+
+    }
 }
